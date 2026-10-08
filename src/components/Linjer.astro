@@ -1,0 +1,25 @@
+---
+// Viser tekst, hvor \n bliver til et linjeskift og ♥ til et lille tegnet hjerte
+// (skrifttyperne har ikke selv et ♥, og telefoner viser det ellers forskelligt).
+import Tegning from './Tegning.astro';
+const { tekst } = Astro.props as { tekst: string };
+const linjer = tekst.split('\n');
+---
+
+{
+  linjer.map((linje, i) => (
+    <Fragment>
+      {i > 0 && <br />}
+      {linje.split('♥').map((del, j) => (
+        <Fragment>
+          {j > 0 && (
+            <span class="hjertetegn" role="img" aria-label="hjerte">
+              <Tegning motiv="hjerte" />
+            </span>
+          )}
+          {del}
+        </Fragment>
+      ))}
+    </Fragment>
+  ))
+}

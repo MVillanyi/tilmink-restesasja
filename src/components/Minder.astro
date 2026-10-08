@@ -1,0 +1,24 @@
+---
+import { indhold } from '../indhold';
+import Hemmelighed from './Hemmelighed.astro';
+import Linjer from './Linjer.astro';
+import Tegning from './Tegning.astro';
+const m = indhold.minder;
+---
+
+<section class="minder" id="minder" aria-labelledby="minder-titel">
+  <h2 class="sektion-titel" id="minder-titel" data-vis>{m.overskrift}</h2>
+  {m.indledning && <p class="sektion-indledning" data-vis><Linjer tekst={m.indledning} /></p>}
+  <ul class="minde-liste">
+    {
+      m.kort.map((kort, i) => (
+        <li class:list={['minde', `minde--${i + 1}`]} data-vis>
+          {kort.tegning && <Tegning motiv={kort.tegning} class="minde-tegning" />}
+          <h3>{kort.titel}</h3>
+          <p><Linjer tekst={kort.tekst} /></p>
+          {kort.hemmelighed && <Hemmelighed hemmelighed={kort.hemmelighed} />}
+        </li>
+      ))
+    }
+  </ul>
+</section>

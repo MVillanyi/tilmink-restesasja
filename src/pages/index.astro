@@ -1,0 +1,28 @@
+---
+import Grundside from '../layouts/Grundside.astro';
+import Kuvert from '../components/Kuvert.astro';
+import Forside from '../components/Forside.astro';
+import SeksTing from '../components/SeksTing.astro';
+import Minder from '../components/Minder.astro';
+import Album from '../components/Album.astro';
+import Brev from '../components/Brev.astro';
+import Slut from '../components/Slut.astro';
+import Fotovisning from '../components/Fotovisning.astro';
+import { indhold } from '../indhold';
+---
+
+<Grundside titel={indhold.side.titel} beskrivelse={indhold.side.beskrivelse}>
+  <Kuvert />
+  <main id="gaven">
+    <Forside />
+    <SeksTing />
+    <Minder />
+    <Album />
+    <Brev />
+    <Slut />
+  </main>
+  <Fotovisning />
+  <script>
+    import '../scripts/gave.ts';
+  </script>
+</Grundside>

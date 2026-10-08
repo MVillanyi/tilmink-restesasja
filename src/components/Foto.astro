@@ -1,0 +1,53 @@
+---
+import { Picture, getImage } from 'astro:assets';
+import { indhold } from '../indhold';
+import { hentBillede } from '../lib/billeder';
+import type { Billede } from '../lib/typer';
+
+interface Props {
+  billede: Billede;
+  /** Billedformat på siden, fx '4 / 5'. Udelad for at vise hele billedet. */
+  forhold?: string;
+  /** Hvor bredt billedet vises – hjælper telefonen med at hente den rette størrelse. */
+  sizes: string;
+  /** Hent med det samme (kun til forsiden). */
+  vigtig?: boolean;
+  visTekst?: boolean;
+  class?: string;
+  [attr: `data-${string}`]: unknown;
+}
+
+const { billede, forhold, sizes, vigtig = false, visTekst = true, class: klasse, ...rest } = Astro.props;
+const img = hentBillede(billede.fil);
+const fuld = await getImage({ src: img, format: 'webp', width: Math.min(img.width, 1600), quality: 82 });
+const bredder = [360, 560, 800, 1080].filter((b) => b < img.width).concat(img.width);
+const stil = [forhold && `--forhold: ${forhold}`, `--fokus: ${billede.fokus ?? '50% 40%'}`]
+  .filter(Boolean)
+  .join('; ');
+---
+
+<figure class:list={['foto', klasse, { 'foto--beskaaret': forhold }]} style={stil} {...rest}>
+  <a class="foto-ramme" href={fuld.src} data-foto data-alt={billede.alt} data-tekst={billede.tekst}>
+    <Picture
+      src={img}
+      alt={billede.alt}
+      formats={['webp']}
+      fallbackFormat="jpg"
+      widths={bredder}
+      sizes={sizes}
+      quality={80}
+      loading={vigtig ? 'eager' : 'lazy'}
+      fetchpriority={vigtig ? 'high' : 'auto'}
+      decoding="async"
+    />
+    <span class="sr">{indhold.fotovisning.aabn}</span>
+  </a>
+  {
+    visTekst && (billede.tekst || billede.dato) && (
+      <figcaption>
+        {billede.tekst}
+        {billede.dato && <span class="foto-dato">{billede.dato}</span>}
+      </figcaption>
+    )
+  }
+</figure>

@@ -1,0 +1,65 @@
+---
+import { indhold } from '../indhold';
+import Linjer from './Linjer.astro';
+import Tegning from './Tegning.astro';
+const k = indhold.kuvert;
+---
+
+<section class="kuvert-lag" data-kuvert aria-label={`${k.til} ${k.fra.replace('♥', '').trim()}`}>
+  <div class="kuvert-scene">
+    <div class="kuvert" data-kuvert-papir>
+      <div class="kuvert-inderside" aria-hidden="true"></div>
+      <div class="kuvert-kort" aria-hidden="true">
+        <Tegning motiv="hjerte" />
+      </div>
+      <div class="kuvert-lomme">
+        <p class="kuvert-til"><Linjer tekst={k.til} /></p>
+        <p class="kuvert-fra"><Linjer tekst={k.fra} /></p>
+      </div>
+      <div class="kuvert-klap" aria-hidden="true"></div>
+      <div class="kuvert-segl" aria-hidden="true">
+        <Tegning motiv="hjerte" />
+      </div>
+    </div>
+  </div>
+  <button type="button" class="knap kuvert-knap" data-kuvert-knap>{k.knap}</button>
+</section>
+
+<!-- Kuverten har sit eget lille script, så den altid kan åbnes. -->
+<script is:inline>
+  (function () {
+    var rod = document.documentElement;
+    var lag = document.querySelector('[data-kuvert]');
+    if (!lag) return;
+    var fjern = function () {
+      if (lag.parentNode) lag.parentNode.removeChild(lag);
+    };
+    if (!rod.classList.contains('kuvert-lukket')) return fjern();
+    var knap = lag.querySelector('[data-kuvert-knap]');
+    var roligt = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var aaben = false;
+    var aabn = function () {
+      if (aaben) return;
+      aaben = true;
+      try {
+        sessionStorage.setItem('gave-aabnet', '1');
+      } catch (e) {}
+      knap.disabled = true;
+      lag.classList.add('aabner');
+      setTimeout(
+        function () {
+          rod.classList.remove('kuvert-lukket');
+          rod.classList.add('kuvert-aaben');
+          lag.classList.add('forsvinder');
+          window.scrollTo(0, 0);
+          var titel = document.querySelector('[data-forside-titel]');
+          if (titel) titel.focus({ preventScroll: true });
+          setTimeout(fjern, roligt ? 0 : 900);
+        },
+        roligt ? 0 : 1500,
+      );
+    };
+    knap.addEventListener('click', aabn);
+    lag.querySelector('[data-kuvert-papir]').addEventListener('click', aabn);
+  })();
+</script>
