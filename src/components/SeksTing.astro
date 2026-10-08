@@ -8,6 +8,7 @@ const s = indhold.seksTing;
 
 <section class="seks" id="seks-ting" aria-labelledby="seks-titel">
   <h2 class="sektion-titel" id="seks-titel" data-vis>{s.overskrift}</h2>
+  {s.indledning && <p class="sektion-indledning" data-vis><Linjer tekst={s.indledning} /></p>}
   <ol class="seks-liste">
     {
       s.ting.map((t, i) => (
