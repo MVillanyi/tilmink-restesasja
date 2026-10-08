@@ -10,8 +10,18 @@ const s = indhold.slut;
   <Tegning motiv="hjerte" class="slut-hjerte" />
   <p class="slut-linje"><Linjer tekst={s.linje} /></p>
   <p class="slut-underskrift"><Linjer tekst={s.underskrift} /></p>
-  <a class="tilbage" href="#start">
-    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20V5m-6 6 6-6 6 6"></path></svg>
-    <span>{s.tilbage}</span>
-  </a>
+  <div class="slut-links">
+    <a class="tilbage" href="#start">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20V5m-6 6 6-6 6 6"></path></svg>
+      <span>{s.tilbage}</span>
+    </a>
+    {
+      s.kuvertIgen && (
+        <button type="button" class="tilbage kuvert-igen" data-kuvert-igen>
+          <Tegning motiv="hjerte" />
+          <span>{s.kuvertIgen}</span>
+        </button>
+      )
+    }
+  </div>
 </footer>

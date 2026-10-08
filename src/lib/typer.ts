@@ -24,6 +24,8 @@ export type Ting = {
   hemmelighed?: Hemmelighed;
   /** Ord, der sættes i hver sin "stilling" (står, ligger, sidder). */
   stillinger?: string[];
+  /** Lille håndskrevet bemærkning ved overskriften. */
+  note?: string;
 };
 
 export type Tegning = 'paraply' | 'sverige' | 'doer' | 'morgen' | 'skildpadde' | 'kram' | 'hjerte';
@@ -33,5 +35,7 @@ export type Minde = {
   tekst: string;
   /** Lille tegning på kortet. */
   tegning?: Tegning;
+  /** Et lille "stempel" på kortet. */
+  stempel?: string;
   hemmelighed?: Hemmelighed;
 };

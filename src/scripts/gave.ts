@@ -149,7 +149,21 @@ function kram() {
   });
 }
 
+/* ── Åbn kuverten igen ──────────────────────────────────────── */
+function kuvertIgen() {
+  document.querySelector('[data-kuvert-igen]')?.addEventListener('click', () => {
+    try {
+      sessionStorage.removeItem('gave-aabnet');
+    } catch {
+      /* ingen hukommelse – kuverten vises alligevel */
+    }
+    window.scrollTo(0, 0);
+    location.replace(location.pathname + location.search);
+  });
+}
+
 overgange();
+kuvertIgen();
 fotovisning();
 dagtaeller();
 kram();

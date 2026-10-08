@@ -15,6 +15,7 @@ const s = indhold.seksTing;
           <div class="ting-tekst">
             <span class="ting-nr" aria-hidden="true">{i + 1}</span>
             <h3>{t.titel}</h3>
+            {t.note && <p class="ting-aside">{t.note}</p>}
             {t.stillinger && (
               <p class="stillinger">
                 {t.stillinger.map((ord, j) => (

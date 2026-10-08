@@ -68,6 +68,7 @@ export const indhold = {
     ting: [
       {
         titel: 'Dit smil.',
+        note: '(Måske lige nu?)', // (udkast – gaven er jo selv en overraskelse)
         // (dine ord)
         tekst: 'Det helt særlige smil, du får, når jeg gør dig glad med noget, du ikke havde regnet med. Det er så meget værd at se dig smile sådan.',
         billede: {
@@ -149,6 +150,7 @@ export const indhold = {
         // (dine ord + udkast i den skjulte note)
         tekst: 'Jeg mener stadig, du burde blive sponsoreret.',
         tegning: 'skildpadde',
+        stempel: 'Sponsor søges', // (udkast)
         hemmelighed: {
           knap: 'Og sponsoratet?',
           tekst: 'Din ansøgning om skildpaddeis-sponsorat er stadig under behandling.',
@@ -233,6 +235,7 @@ Og så siger jeg det bare igen, for tusinde gang, og der kommer mange tusinde en
     linje: 'Min yndlings. Jeg elsker dig.',
     underskrift: 'Din Marcus ♥',
     tilbage: 'Tilbage til begyndelsen',
+    kuvertIgen: 'Åbn kuverten igen',
   },
 
   // Små ord til knapper i fotovisningen
