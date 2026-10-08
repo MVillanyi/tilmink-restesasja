@@ -12,6 +12,8 @@ export type Billede = {
    * "50% 0%" = midt for, helt oppe. "50% 50%" = midten.
    */
   fokus?: string;
+  /** Billedformat, fx '4 / 5' eller '3 / 4'. Udelad for sidens standard. */
+  format?: string;
 };
 
 /** En lille skjult note, der kan foldes ud med et tryk. */

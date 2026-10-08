@@ -12,6 +12,10 @@
   --blaek: #3b2a2d;
   --blaek-bloed: #6a5357;
   --tape: rgb(228 195 190 / 0.72);
+  --rosa-blaek: #e9c3bb; /* tekst på vinrød */
+  --havre-lys: #f3e9da;
+  --blyant: #9a8580;
+  --felt-vin: radial-gradient(120% 85% at 50% 42%, #5a1a2a 0%, #4b1420 58%, #3a0e19 100%);
 
   --serif: 'Fraunces Variable', 'Iowan Old Style', Georgia, serif;
   --sans: 'Instrument Sans Variable', system-ui, -apple-system, 'Segoe UI', sans-serif;
@@ -220,13 +224,9 @@ a {
   inset: 0;
   z-index: 50;
   display: grid;
-  place-content: center;
-  justify-items: center;
-  gap: clamp(2.5rem, 7vh, 3.75rem);
-  padding: max(2rem, env(safe-area-inset-top)) var(--kant) max(2rem, env(safe-area-inset-bottom));
-  background:
-    radial-gradient(70% 55% at 50% 42%, rgb(242 225 220 / 0.95), transparent 72%),
-    var(--elfenben);
+  place-items: center;
+  padding: max(1.5rem, env(safe-area-inset-top)) var(--kant) max(1.5rem, env(safe-area-inset-bottom));
+  background: var(--felt-vin);
   transition: opacity 0.9s ease, visibility 0s 0.9s;
 }
 .kuvert-lag.forsvinder {
@@ -235,22 +235,49 @@ a {
   pointer-events: none;
 }
 
-.kuvert-scene {
-  perspective: 1100px;
-  animation: svaeve 5s ease-in-out infinite;
+/* Hele kuverten og etiketten er én knap */
+.kuvert-knap {
+  display: grid;
+  justify-items: center;
+  gap: clamp(2rem, 6vh, 3rem);
+  margin: 0;
+  padding: 1.25rem;
+  border: 0;
+  border-radius: 20px;
+  background: none;
+  color: inherit;
+  font: inherit;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
 }
-.aabner .kuvert-scene {
-  animation: none;
+.kuvert-knap:focus-visible {
+  outline: 2px solid var(--papir);
+  outline-offset: 6px;
+}
+
+.kuvert-scene {
+  display: block;
+  perspective: 1100px;
 }
 
 .kuvert {
-  --b: min(84vw, 390px);
+  --b: min(80vw, 400px);
   position: relative;
+  display: block;
   width: var(--b);
-  aspect-ratio: 1.4;
-  cursor: pointer;
-  filter: drop-shadow(0 22px 30px rgb(110 31 51 / 0.2)) drop-shadow(0 2px 3px rgb(59 42 45 / 0.12));
-  -webkit-tap-highlight-color: transparent;
+  aspect-ratio: 1.42;
+  rotate: -2deg;
+  filter: drop-shadow(0 30px 34px rgb(0 0 0 / 0.42)) drop-shadow(0 2px 3px rgb(0 0 0 / 0.2));
+  transition: translate 0.4s var(--blid), rotate 0.4s var(--blid);
+}
+@media (hover: hover) {
+  .kuvert-knap:hover .kuvert {
+    translate: 0 -4px;
+    rotate: -1deg;
+  }
+  .kuvert-knap:hover .kuvert-etiket {
+    background: #fffcf6;
+  }
 }
 
 .kuvert-inderside,
@@ -264,7 +291,9 @@ a {
   inset: 0;
   z-index: 1;
   border-radius: 6px;
-  background: linear-gradient(#c99993, #dcb3ac 40%);
+  background:
+    repeating-linear-gradient(45deg, rgb(110 31 51 / 0.07) 0 1px, transparent 1px 7px),
+    linear-gradient(#f6ece6, #ead6cf 45%);
 }
 
 .kuvert-kort {
@@ -273,17 +302,23 @@ a {
   top: 6%;
   height: 86%;
   z-index: 2;
-  display: grid;
-  place-items: start center;
-  padding-top: 9%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.35em;
+  padding-top: 8%;
   border-radius: 4px;
-  background: var(--papir);
+  background: #fffcf6;
   color: var(--vin);
   box-shadow: 0 2px 6px rgb(59 42 45 / 0.12);
-  transition: transform 0.9s var(--blid) 0.55s;
+  font-family: var(--serif);
+  font-size: calc(var(--b) * 0.06);
+  font-style: italic;
+  font-variation-settings: 'SOFT' 100, 'WONK' 1;
+  transition: transform 0.9s var(--blid) 0.5s;
 }
 .kuvert-kort .tegning {
-  width: 26%;
+  width: 11%;
 }
 
 .kuvert-lomme {
@@ -292,77 +327,121 @@ a {
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
-  align-items: center;
-  padding-bottom: 7%;
+  align-items: flex-start;
+  padding: 0 0 7% 10%;
   border-radius: 6px;
   background:
-    linear-gradient(to top right, transparent 49.6%, rgb(110 31 51 / 0.07) 50%, transparent 50.6%) left / 50% 100% no-repeat,
-    linear-gradient(to top left, transparent 49.6%, rgb(110 31 51 / 0.07) 50%, transparent 50.6%) right / 50% 100% no-repeat,
-    linear-gradient(170deg, #f1dcd6, #e9cbc4);
-  clip-path: polygon(0 0, 50% 49%, 100% 0, 100% 100%, 0 100%);
+    linear-gradient(to top right, transparent 49.6%, rgb(75 20 32 / 0.12) 50%, transparent 50.5%) left / 50% 100% no-repeat,
+    linear-gradient(to top left, transparent 49.6%, rgb(75 20 32 / 0.12) 50%, transparent 50.5%) right / 50% 100% no-repeat,
+    linear-gradient(170deg, #e7c1ba, #d8a7a1);
+  clip-path: polygon(0 0, 50% 52%, 100% 0, 100% 100%, 0 100%);
   color: var(--vin);
   font-family: var(--haand);
-  text-align: center;
 }
 .kuvert-til {
-  font-size: calc(var(--b) * 0.104);
+  font-size: calc(var(--b) * 0.1);
   font-weight: 600;
   line-height: 1;
-  transform: rotate(-3deg);
+  rotate: -3deg;
 }
 .kuvert-fra {
-  margin-top: 0.15em;
-  font-size: calc(var(--b) * 0.066);
-  font-weight: 500;
+  margin: 0.2em 0 0 0.6em;
+  font-size: calc(var(--b) * 0.068);
+  font-weight: 600;
   line-height: 1.1;
-  transform: rotate(-3deg) translateX(18%);
+  rotate: -3deg;
 }
 
 .kuvert-klap {
   left: 0;
   right: 0;
   top: 0;
-  height: 50%;
+  height: 54%;
   z-index: 4;
   transform-origin: 50% 0;
-  transition: transform 0.75s var(--blid) 0.12s, z-index 0s 0.5s;
+  transition: transform 0.7s cubic-bezier(0.45, 0.05, 0.25, 1) 0.12s, z-index 0s 0.45s;
 }
 .kuvert-klap::before {
   content: '';
   position: absolute;
   inset: 0;
   border-radius: 6px 6px 0 0;
-  background: linear-gradient(180deg, #e6c4bd, #dfb8b0);
+  background: linear-gradient(180deg, #dcaea7, #cf9a94);
   clip-path: polygon(0 0, 100% 0, 50% 100%);
 }
 
 .kuvert-segl {
   position: absolute;
   left: 50%;
-  top: 50%;
+  top: 54%;
   z-index: 5;
   display: grid;
   place-items: center;
-  width: calc(var(--b) * 0.15);
+  width: calc(var(--b) * 0.13);
   aspect-ratio: 1;
   translate: -50% -50%;
   border-radius: 50%;
   background: radial-gradient(circle at 35% 30%, #8f3249, var(--vin) 55%, var(--vin-dyb));
-  box-shadow: 0 0 0 3px rgb(110 31 51 / 0.18), 0 4px 10px rgb(82 21 37 / 0.35);
-  color: rgb(252 248 242 / 0.92);
-  transition: opacity 0.3s, scale 0.35s var(--blid);
+  box-shadow: inset 0 0 0 2px rgb(251 246 238 / 0.25), 0 3px 8px rgb(58 14 25 / 0.45);
+  color: rgb(252 248 242 / 0.95);
+  transition: opacity 0.25s, scale 0.3s var(--blid);
 }
 .kuvert-segl .tegning {
-  width: 46%;
+  width: 44%;
 }
 
-.kuvert-knap {
-  min-width: min(84vw, 260px);
+.kuvert-stempel {
+  position: absolute;
+  top: 7%;
+  right: 5%;
+  z-index: 6;
+  width: 38%;
+  overflow: visible;
+  color: rgb(110 31 51 / 0.5);
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.6;
+  rotate: -10deg;
+  transition: opacity 0.3s;
+}
+.kuvert-stempel text {
+  fill: currentColor;
+  stroke: none;
+  font-family: var(--sans);
+  font-size: 9.5px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+}
+.kuvert-stempel .stempel-dato {
+  font-size: 12px;
+  letter-spacing: 0.04em;
+}
+
+.kuvert-etiket {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: min(80vw, 250px);
+  min-height: 52px;
+  padding: 0.8rem 2rem;
+  border-radius: 999px;
+  background: var(--papir);
+  color: var(--vin-dyb);
+  font: 600 1.0625rem/1 var(--sans);
+  letter-spacing: 0.02em;
+  box-shadow: 0 12px 30px -12px rgb(0 0 0 / 0.55);
+  transition: background-color 0.25s, scale 0.2s var(--blid), opacity 0.25s;
+}
+.kuvert-knap:active .kuvert-etiket {
+  scale: 0.97;
 }
 
 /* Åbningen */
-.aabner .kuvert-segl {
+.aabner .kuvert-segl,
+.aabner .kuvert-stempel {
   opacity: 0;
+}
+.aabner .kuvert-segl {
   scale: 0.6;
 }
 .aabner .kuvert-klap {
@@ -370,17 +449,10 @@ a {
   z-index: 1;
 }
 .aabner .kuvert-kort {
-  transform: translateY(-48%);
+  transform: translateY(-52%) rotate(-2deg);
 }
-.aabner .kuvert-knap {
+.aabner .kuvert-etiket {
   opacity: 0;
-  transition: opacity 0.3s;
-}
-
-@keyframes svaeve {
-  50% {
-    translate: 0 -5px;
-  }
 }
 
 /* ════════════════════════════════════════════════════════════════
@@ -398,25 +470,16 @@ a {
 
 .forside {
   display: grid;
-  gap: clamp(2.5rem, 8vw, 4rem);
+  gap: clamp(2.25rem, 8vw, 3.5rem);
   max-width: var(--bredde);
   margin: 0 auto;
-  padding: clamp(3rem, 12vw, 6.5rem) var(--kant) clamp(3rem, 10vw, 5rem);
-}
-
-.forside-dato {
-  color: var(--vin);
-  font-size: 0.78rem;
-  font-weight: 600;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
+  padding: calc(clamp(2.5rem, 10vw, 5rem) + env(safe-area-inset-top)) var(--kant) clamp(3rem, 10vw, 5rem);
 }
 
 .forside-titel {
-  margin-top: 1.4rem;
   color: var(--blaek);
-  line-height: 0.92;
-  letter-spacing: -0.025em;
+  line-height: 0.9;
+  letter-spacing: -0.03em;
 }
 .forside-titel:focus {
   outline: none;
@@ -425,60 +488,67 @@ a {
   display: block;
 }
 .forside-titel span:first-child {
-  font-size: clamp(4rem, 21vw, 8.6rem);
-  font-variation-settings: 'SOFT' 30, 'WONK' 0;
+  font-size: clamp(5rem, 3.4rem + 9vw, 11.5rem);
+  font-weight: 360;
+  font-variation-settings: 'SOFT' 100, 'WONK' 0;
 }
 .forside-titel span:last-child {
-  margin-top: 0.08em;
+  margin-top: 0.2em;
   padding-left: 0.04em;
   color: var(--vin);
-  font-size: clamp(2.7rem, 13vw, 5.6rem);
+  font-size: clamp(2.6rem, 1.9rem + 3vw, 4.6rem);
   font-style: italic;
   font-variation-settings: 'SOFT' 100, 'WONK' 1;
+  letter-spacing: -0.015em;
 }
 
 .forside-under {
   max-width: 24ch;
-  margin-top: 1.6rem;
+  margin-top: 1.5rem;
   font-family: var(--serif);
-  font-size: clamp(1.25rem, 5vw, 1.6rem);
+  font-size: clamp(1.3rem, 1.1rem + 1vw, 1.65rem);
+  font-weight: 380;
   font-variation-settings: 'SOFT' 100;
   line-height: 1.38;
-  color: var(--blaek-bloed);
+  color: var(--blaek);
 }
 
-.dage {
-  display: inline-flex;
-  margin-top: 1.4rem;
-  color: var(--vin);
-  font-family: var(--haand);
-  font-size: 1.6rem;
-  font-weight: 500;
-  line-height: 1.1;
-  rotate: -2deg;
+.forside-billede {
+  position: relative;
 }
-
 .forside-foto {
   position: relative;
-  margin: 0;
-  rotate: 1.2deg;
+  rotate: -1.5deg;
 }
-.forside-foto .foto-ramme {
-  padding: clamp(8px, 2.4vw, 14px);
-  background: var(--papir);
-  box-shadow: var(--skygge);
+.forside-foto.print figcaption {
+  color: var(--vin);
+  font-size: 1.5rem;
+  font-weight: 600;
 }
+/* Tapen sidder på væggen i hjørnet – aldrig over ansigterne */
 .forside-foto::before {
   content: '';
   position: absolute;
-  top: -13px;
-  left: 9%;
+  top: 6px;
+  left: -18px;
   z-index: 2;
   width: 104px;
-  height: 30px;
-  rotate: -7deg;
+  height: 28px;
+  rotate: -35deg;
   background: var(--tape);
   box-shadow: 0 1px 2px rgb(59 42 45 / 0.08);
+}
+
+.dage {
+  display: block;
+  width: fit-content;
+  margin: 1.1rem 0 0 auto;
+  color: var(--vin);
+  font-family: var(--haand);
+  font-size: 1.55rem;
+  font-weight: 600;
+  line-height: 1.1;
+  rotate: -3deg;
 }
 
 .videre {
@@ -486,6 +556,7 @@ a {
   align-items: center;
   gap: 0.7rem;
   justify-self: start;
+  min-height: 48px;
   padding: 0.5rem 0;
   color: var(--vin);
   font-family: var(--serif);
@@ -501,15 +572,9 @@ a {
   stroke-width: 1.6;
   stroke-linecap: round;
   stroke-linejoin: round;
-  animation: nik 2.6s ease-in-out infinite;
 }
 .videre:hover span {
   text-decoration: underline;
-}
-@keyframes nik {
-  50% {
-    translate: 0 5px;
-  }
 }
 
 /* ════════════════════════════════════════════════════════════════
@@ -682,19 +747,6 @@ a {
   rotate: 2.2deg;
 }
 
-/* Den fjollede side får hele bredden */
-.ting--2 .ting-foto {
-  margin-inline: calc(var(--kant) * -1);
-}
-.ting--2 .ting-foto figcaption {
-  padding-inline: var(--kant);
-  font-size: 1.6rem;
-  rotate: -1.2deg;
-}
-.ting--2 h3 {
-  font-size: clamp(2.3rem, 10vw, 3.6rem);
-}
-
 /* Stå-kramme, putte-kramme, sidde-kramme – hver i sin stilling */
 .stillinger {
   margin-top: 0.9rem;
@@ -825,6 +877,118 @@ a {
 }
 
 /* ════════════════════════════════════════════════════════════════
+   3½ · Din fjollede side
+   ════════════════════════════════════════════════════════════════ */
+.fjollet {
+  position: relative;
+  padding: clamp(5rem, 16vw, 8rem) var(--kant) clamp(6rem, 18vw, 9rem);
+  background: var(--rosa-lys);
+}
+.fjollet-indre {
+  display: grid;
+  gap: 2.5rem;
+  max-width: var(--bredde);
+  margin: 0 auto;
+}
+.fjollet-over {
+  color: var(--vin);
+  font: 600 0.8rem/1 var(--sans);
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+.fjollet-titel {
+  margin-top: 1.1rem;
+  color: var(--blaek);
+  font-size: clamp(2.25rem, 1.6rem + 2.6vw, 3.9rem);
+  font-weight: 380;
+  font-variation-settings: 'SOFT' 100;
+  line-height: 1.06;
+  letter-spacing: -0.015em;
+}
+.fjollet-linje1 {
+  display: block;
+}
+.fjollet-linje2 {
+  display: inline-block;
+  margin: 0.2em 0 0 min(22%, 4.5rem);
+  white-space: nowrap;
+  color: var(--vin);
+  font-size: 1.16em;
+  font-style: italic;
+  font-weight: 420;
+  font-variation-settings: 'SOFT' 100, 'WONK' 1;
+  rotate: -3deg;
+}
+/* "Nogle gange." vipper ind lidt efter resten */
+.js .fjollet-titel[data-vis] .fjollet-linje2 {
+  opacity: 0;
+  rotate: 0deg;
+  transition: opacity 0.6s ease 0.5s, rotate 0.7s var(--blid) 0.5s;
+}
+.js .fjollet-titel.er-synlig .fjollet-linje2 {
+  opacity: 1;
+  rotate: -3deg;
+}
+
+.fjollet-foto {
+  --r: 0deg;
+  position: relative;
+  rotate: var(--r);
+}
+.fjollet-foto--1 {
+  --r: -2.5deg;
+  width: 94%;
+  justify-self: center;
+  padding-bottom: 28px;
+}
+.fjollet-foto--2,
+.fjollet-foto--3 {
+  --r: 3deg;
+  width: 72%;
+  justify-self: end;
+  margin-top: -1.5rem;
+}
+.fjollet-foto--3 {
+  --r: -2deg;
+  justify-self: start;
+}
+.fjollet-foto--1::before,
+.fjollet-foto--1::after {
+  content: '';
+  position: absolute;
+  top: -10px;
+  right: 6%;
+  z-index: 2;
+  width: 96px;
+  height: 26px;
+  background: var(--tape);
+  rotate: 38deg;
+}
+.fjollet-foto--1::after {
+  right: 8%;
+  background: rgb(234 219 196 / 0.8);
+  rotate: -28deg;
+}
+/* De fjollede billeder er de eneste, der vrikker lidt */
+.js .fjollet-foto.er-synlig {
+  animation: vrikke 0.85s ease-out 0.15s both;
+}
+@keyframes vrikke {
+  0% {
+    rotate: calc(var(--r) - 2.5deg);
+  }
+  55% {
+    rotate: calc(var(--r) + 1.2deg);
+  }
+  80% {
+    rotate: calc(var(--r) - 0.6deg);
+  }
+  100% {
+    rotate: var(--r);
+  }
+}
+
+/* ════════════════════════════════════════════════════════════════
    4 · Små minder
    ════════════════════════════════════════════════════════════════ */
 .minder {
@@ -940,9 +1104,7 @@ a {
 .album {
   position: relative;
   padding: var(--luft) var(--kant);
-  background:
-    radial-gradient(80% 60% at 20% 0%, rgb(252 248 242 / 0.65), transparent 70%),
-    var(--rosa-lys);
+  background: var(--havre-lys);
 }
 .album::before,
 .album::after {
@@ -951,7 +1113,7 @@ a {
   left: 0;
   right: 0;
   height: 18px;
-  background: var(--rosa-lys);
+  background: var(--havre-lys);
   mask: radial-gradient(9px at 50% 0, #000 98%, transparent) 50% / 18px 100% repeat-x;
 }
 .album::before {
@@ -964,48 +1126,29 @@ a {
 
 .album-gitter {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: clamp(1.6rem, 5vw, 2.6rem) clamp(1rem, 4vw, 2rem);
+  gap: 3rem;
   align-items: start;
   max-width: var(--bredde);
   margin: clamp(3rem, 10vw, 5rem) auto 0;
 }
 .album-foto {
-  padding: clamp(8px, 2.4vw, 13px) clamp(8px, 2.4vw, 13px) 0;
-  background: var(--papir);
-  box-shadow: var(--skygge);
-}
-.album-foto figcaption {
-  margin: 0;
-  padding: 0.7rem 0.3rem 0.95rem;
-  font-size: clamp(1.3rem, 4.4vw, 1.5rem);
-  text-align: center;
-}
-.album-foto:not(:has(figcaption)) {
-  padding-bottom: clamp(8px, 2.4vw, 13px);
-}
-.album-foto--1,
-.album-foto--4 {
-  grid-column: 1 / -1;
-}
-.album-foto--1 {
-  rotate: -1deg;
+  position: relative;
+  width: 86%;
+  rotate: -1.5deg;
 }
 .album-foto--2 {
-  rotate: 1.8deg;
+  width: 76%;
+  justify-self: end;
+  rotate: 2.2deg;
 }
 .album-foto--3 {
-  margin-top: 2.6rem;
-  rotate: -2deg;
+  width: 78%;
+  rotate: -1deg;
 }
 .album-foto--4 {
-  width: 86%;
-  justify-self: center;
-  rotate: 1deg;
-}
-.album-foto--2 figcaption,
-.album-foto--3 figcaption {
-  font-size: clamp(1.25rem, 3.9vw, 1.4rem);
+  width: 80%;
+  justify-self: end;
+  rotate: 1.4deg;
 }
 .album-foto--1::before,
 .album-foto--3::before {
@@ -1020,8 +1163,11 @@ a {
   rotate: 4deg;
   background: var(--tape);
 }
-.album-foto {
-  position: relative;
+.album-foto--3::before {
+  left: auto;
+  right: -14px;
+  translate: none;
+  rotate: 50deg;
 }
 
 /* ════════════════════════════════════════════════════════════════
@@ -1036,17 +1182,26 @@ a {
   max-width: var(--bredde);
   margin: clamp(3rem, 10vw, 5rem) auto 0;
 }
-.brev-foto {
-  width: min(88%, 420px);
-  padding: clamp(8px, 2.4vw, 13px) clamp(8px, 2.4vw, 13px) 0;
-  background: var(--papir);
-  box-shadow: var(--skygge);
-  rotate: -1.6deg;
+.brev-billede {
+  position: relative;
+  width: min(80%, 400px);
+  justify-self: end;
 }
-.brev-foto figcaption {
-  margin: 0;
-  padding: 0.7rem 0.3rem 0.95rem;
-  text-align: center;
+.brev-foto {
+  rotate: 1.5deg;
+}
+/* En lille papirclips holder billedet fast */
+.clips {
+  position: absolute;
+  top: -24px;
+  left: 16%;
+  z-index: 2;
+  width: 20px;
+  fill: none;
+  stroke: var(--blyant);
+  stroke-width: 2.2;
+  stroke-linecap: round;
+  rotate: -12deg;
 }
 
 .brev-papir {
@@ -1097,6 +1252,16 @@ a {
 .brev-papir > .brev-underskrift {
   margin-top: 1rem;
 }
+/* Underskriften skriver sig selv */
+.js .brev-underskrift[data-vis] {
+  opacity: 1;
+  translate: none;
+  clip-path: inset(-20% 100% -20% -5%);
+  transition: clip-path 1.2s ease-in-out 0.25s;
+}
+.js .brev-underskrift[data-vis].er-synlig {
+  clip-path: inset(-20% -5% -20% -5%);
+}
 .brev-ps {
   color: var(--blaek-bloed);
   font-family: var(--haand);
@@ -1125,23 +1290,27 @@ a {
 .slut {
   display: grid;
   justify-items: center;
+  align-content: center;
   gap: 1.2rem;
-  padding: var(--luft) var(--kant) calc(var(--luft) * 0.8);
+  min-height: 92svh;
+  padding: calc(var(--luft) + 20svh) var(--kant) calc(var(--luft) * 0.8 + env(safe-area-inset-bottom));
+  background: linear-gradient(180deg, transparent 0, #4b1420 22svh, #3a0e19 100%);
+  color: var(--papir);
   text-align: center;
 }
 .slut-for {
   max-width: 26ch;
-  color: var(--blaek-bloed);
+  color: var(--rosa-blaek);
   font-family: var(--serif);
-  font-size: clamp(1.2rem, 4.6vw, 1.45rem);
+  font-size: clamp(1.2rem, 1rem + 1vw, 1.5rem);
   font-style: italic;
   font-variation-settings: 'SOFT' 100;
   line-height: 1.45;
 }
 .slut-hjerte {
   width: 40px;
-  margin-top: 1.6rem;
-  color: var(--vin);
+  margin-top: 1.4rem;
+  color: var(--rosa);
 }
 .er-synlig .slut-hjerte {
   /* Banker afsted … og falder så stille og roligt til ro. */
@@ -1151,19 +1320,20 @@ a {
 }
 .slut-linje {
   max-width: 13ch;
-  color: var(--vin);
+  color: var(--papir);
   font-family: var(--serif);
-  font-size: clamp(2.6rem, 11vw, 5rem);
+  font-size: clamp(2.8rem, 1.8rem + 4.6vw, 6rem);
   font-style: italic;
+  font-weight: 340;
   font-variation-settings: 'SOFT' 100, 'WONK' 1;
   line-height: 1.02;
   letter-spacing: -0.015em;
   text-wrap: balance;
 }
 .slut-underskrift {
-  color: var(--vin);
+  color: var(--rosa-blaek);
   font-family: var(--haand);
-  font-size: 2.3rem;
+  font-size: clamp(2.2rem, 1.9rem + 1.4vw, 2.8rem);
   font-weight: 600;
   line-height: 1;
   rotate: -3deg;
@@ -1175,25 +1345,15 @@ a {
   gap: 0.25rem 1.75rem;
   margin-top: clamp(3rem, 10vw, 5rem);
 }
-.kuvert-igen {
-  border: 0;
-  background: none;
-  font-family: var(--sans);
-  cursor: pointer;
-}
-.kuvert-igen .tegning {
-  width: 15px;
-  color: var(--vin);
-}
-html:not(.js) .kuvert-igen {
-  display: none;
+.slut :focus-visible {
+  outline-color: var(--papir);
 }
 .tilbage {
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
   min-height: 44px;
-  color: var(--blaek-bloed);
+  color: var(--rosa-blaek);
   font-size: 0.95rem;
   text-decoration: none;
 }
@@ -1205,8 +1365,22 @@ html:not(.js) .kuvert-igen {
   stroke-linecap: round;
   stroke-linejoin: round;
 }
+.tilbage .tegning--hjerte {
+  width: 15px;
+  fill: currentColor;
+  stroke: none;
+}
 .tilbage:hover span {
   text-decoration: underline;
+}
+.kuvert-igen {
+  border: 0;
+  background: none;
+  font-family: var(--sans);
+  cursor: pointer;
+}
+html:not(.js) .kuvert-igen {
+  display: none;
 }
 
 /* ════════════════════════════════════════════════════════════════
@@ -1355,12 +1529,6 @@ html:not(.js) .kuvert-igen {
   .ting--1 .ting-foto {
     width: 100%;
   }
-  .ting--2 .ting-foto {
-    margin-inline: 0;
-  }
-  .ting--2 .ting-foto figcaption {
-    padding-inline: 0;
-  }
   .minde,
   .minde:nth-child(n) {
     flex: 0 1 calc(50% - 1.2rem);
@@ -1369,24 +1537,8 @@ html:not(.js) .kuvert-igen {
   .minde:nth-child(even) {
     margin-top: 2rem;
   }
-  .album-gitter {
-    grid-template-columns: repeat(12, minmax(0, 1fr));
-  }
-  .album-foto--1 {
-    grid-column: 1 / span 7;
-  }
-  .album-foto--2 {
-    grid-column: 8 / span 5;
-    margin-top: 3rem;
-  }
-  .album-foto--3 {
-    grid-column: 2 / span 5;
-    margin-top: -2rem;
-  }
-  .album-foto--4 {
-    grid-column: 7 / span 5;
-    width: 100%;
-    margin-top: -6rem;
+  .forside {
+    max-width: 600px;
   }
 }
 
@@ -1395,16 +1547,22 @@ html:not(.js) .kuvert-igen {
     font-size: 106.25%;
   }
   .forside {
-    grid-template-columns: minmax(0, 1fr) minmax(0, 0.82fr);
+    grid-template-columns: minmax(0, 1fr) minmax(0, 0.8fr);
     grid-template-rows: auto auto;
     align-items: center;
     column-gap: clamp(3rem, 6vw, 6rem);
+    max-width: var(--bredde);
     min-height: min(100svh, 980px);
     padding-top: 4rem;
   }
-  .forside-foto {
+  .forside-billede {
     grid-column: 2;
     grid-row: 1 / span 2;
+    justify-self: center;
+    width: min(100%, 500px, calc((100svh - 240px) * 0.75));
+  }
+  .forside-foto {
+    rotate: -2deg;
   }
   .videre {
     grid-column: 1;
@@ -1422,24 +1580,38 @@ html:not(.js) .kuvert-igen {
   .ting--1 .ting-foto {
     max-width: 440px;
   }
-  .ting--2 {
+  .ting--foto:not(.ting--1) {
     grid-column: 1 / -1;
-    grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
-    align-items: end;
-    gap: 4rem;
-  }
-  .ting--2 .ting-foto {
-    order: -1;
-  }
-  .ting--2 .ting-tekst {
-    padding-bottom: 5rem;
   }
   .ting--note {
     grid-column: span 6;
   }
-  .ting--note:nth-child(4n + 4),
-  .ting--note:nth-child(4n + 5) {
-    margin-top: 4rem;
+  .ting--note:nth-child(odd) {
+    margin-top: 4.5rem;
+  }
+
+  .fjollet-indre {
+    grid-template-columns: minmax(0, 6fr) minmax(0, 1fr) minmax(0, 5fr);
+    align-items: end;
+    row-gap: 3.5rem;
+  }
+  .fjollet-foto--1 {
+    --r: -3deg;
+    grid-column: 1;
+    grid-row: 1 / span 2;
+    width: 100%;
+    max-width: 560px;
+  }
+  .fjollet-tekst {
+    grid-column: 3;
+    grid-row: 1;
+  }
+  .fjollet-foto--2,
+  .fjollet-foto--3 {
+    grid-column: 3;
+    width: 100%;
+    max-width: 380px;
+    margin-top: 0;
   }
 
   .minde,
@@ -1447,21 +1619,38 @@ html:not(.js) .kuvert-igen {
     flex: 0 1 calc(33.333% - 1.6rem);
   }
 
+  .album-gitter {
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    column-gap: 2rem;
+  }
+  .album-foto,
+  .album-foto:nth-child(n) {
+    grid-column: span 4;
+    width: 100%;
+    justify-self: stretch;
+  }
+  .album-foto:nth-child(3n + 2) {
+    margin-top: 6rem;
+  }
+  .album-foto:nth-child(3n + 3) {
+    margin-top: 1.5rem;
+  }
+
   .brev-opslag {
-    grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+    grid-template-columns: minmax(0, 4fr) minmax(0, 7fr);
     align-items: start;
     gap: clamp(3rem, 6vw, 6rem);
   }
-  .brev-foto {
+  .brev-billede {
     width: 100%;
-    margin-top: 2rem;
+    margin-top: 3rem;
   }
 }
 
 @media (min-width: 1000px) and (min-height: 760px) {
-  .brev-foto {
+  .brev-billede {
     position: sticky;
-    top: 12vh;
+    top: 14vh;
   }
 }
 
@@ -1482,5 +1671,10 @@ html:not(.js) .kuvert-igen {
   .js [data-vis] {
     opacity: 1;
     translate: none;
+  }
+  .js .brev-underskrift[data-vis],
+  .js .fjollet-titel[data-vis] .fjollet-linje2 {
+    clip-path: none;
+    opacity: 1;
   }
 }

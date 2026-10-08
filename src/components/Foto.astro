@@ -17,7 +17,9 @@ interface Props {
   [attr: `data-${string}`]: unknown;
 }
 
-const { billede, forhold, sizes, vigtig = false, visTekst = true, class: klasse, ...rest } = Astro.props;
+const { billede, sizes, vigtig = false, visTekst = true, class: klasse, ...rest } = Astro.props;
+// Et format sat i indhold.ts vinder over sidens standard.
+const forhold = billede.format ?? Astro.props.forhold;
 const img = hentBillede(billede.fil);
 const fuld = await getImage({ src: img, format: 'webp', width: Math.min(img.width, 1600), quality: 82 });
 const bredder = [360, 560, 800, 1080].filter((b) => b < img.width).concat(img.width);

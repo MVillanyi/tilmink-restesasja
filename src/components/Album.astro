@@ -2,8 +2,6 @@
 import { indhold } from '../indhold';
 import Foto from './Foto.astro';
 const a = indhold.album;
-// Albummet skifter mellem nogle få formater, så det ikke ligner et gitter.
-const formater = ['4 / 5', '3 / 4', '3 / 4', '4 / 5'];
 ---
 
 <section class="album" id="album" aria-labelledby="album-titel">
@@ -13,9 +11,9 @@ const formater = ['4 / 5', '3 / 4', '3 / 4', '4 / 5'];
       a.billeder.map((b, i) => (
         <Foto
           billede={b}
-          forhold={formater[i % formater.length]}
-          sizes="(min-width: 1000px) 520px, (min-width: 600px) 50vw, 92vw"
-          class={`album-foto album-foto--${(i % 4) + 1}`}
+          forhold="4 / 5"
+          sizes="(min-width: 1000px) 460px, 86vw"
+          class={`album-foto album-foto--${(i % 4) + 1} print`}
           data-vis
         />
       ))

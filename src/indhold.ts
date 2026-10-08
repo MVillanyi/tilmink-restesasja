@@ -37,6 +37,8 @@ export const indhold = {
     til: 'Til Sasja.',
     fra: 'Fra mig. ♥',
     knap: 'Åbn din gave',
+    kort: 'Seks måneder', // står på kortet, der glider op
+    stempel: ['SEKS MÅNEDER', '19.10.2026'], // poststemplet; slet linjen for at fjerne det
   },
 
   // 2 · Det første syn
@@ -56,7 +58,7 @@ export const indhold = {
   dage: {
     vis: true,
     start: '2026-04-19',
-    tekst: '{dage} dage med dig',
+    tekst: '{dage} dage med dig indtil videre.',
     // På selve seksmånedersdagen står der i stedet:
     jubilaeum: '2026-10-19',
     jubilaeumTekst: 'Seks måneder i dag ♥',
@@ -82,12 +84,6 @@ export const indhold = {
         titel: 'Din fjollede side.',
         // (dine ord: "sødt grin", "smile som et fjols")
         tekst: 'Dit søde grin og alle dine fjollerier. Du får mig til at smile som et fjols.',
-        billede: {
-          fil: 'os-fjollede-ansigter.jpg',
-          alt: 'Sasja og Marcus laver fjollede ansigter i spejlet. Hun rækker tunge og blinker, han laver trutmund.',
-          tekst: 'Vi kan også godt være seriøse. Nogle gange.', // (udkast)
-          fokus: '50% 0%',
-        },
       },
       {
         titel: 'Dit store hjerte.',
@@ -113,6 +109,25 @@ export const indhold = {
         tekst: 'Du er helt fantastisk, som du er.',
       },
     ] satisfies Ting[],
+  },
+
+  // 3½ · Din fjollede side får sit eget opslag med de fjollede billeder
+  fjollet: {
+    overtekst: 'Bevismateriale', // (udkast)
+    overskrift: ['Vi kan også godt være seriøse.', 'Nogle gange.'], // (udkast)
+    billeder: [
+      {
+        fil: 'os-fjollede-ansigter.jpg',
+        alt: 'Sasja og Marcus i et tæt spejlbillede. Hun rækker tunge og blinker, og han laver trutmund og holder om hende.',
+        fokus: '50% 0%',
+      },
+      {
+        fil: 'sasja-folie.jpg',
+        alt: 'Sasja smiler med folie i hele håret.',
+        tekst: 'Også sådan her er du min yndlings.', // (udkast)
+        fokus: '50% 0%',
+      },
+    ] satisfies Billede[],
   },
 
   // 4 · Små minder om os (uden datoer)
@@ -164,29 +179,24 @@ export const indhold = {
     overskrift: 'Små øjeblikke med dig.',
     billeder: [
       {
-        fil: 'os-frisoer-grin.jpg',
-        alt: 'Marcus griner ind i kameraet. Bag ham sidder Sasja med folie i håret, rækker tunge og laver peacetegn.',
-        // (udkast ud fra dine ord: "mærkelige ting for at se dig smile", "yndlingsaktivitet")
-        tekst: 'At gøre mærkelige ting for at se dig smile. Stadig en yndlingsaktivitet.',
-        fokus: '50% 64%',
-      },
-      {
-        fil: 'sasja-folie.jpg',
-        alt: 'Sasja smiler med folie i håret.',
-        tekst: 'Også sådan her er du min yndlings.', // (udkast)
-        fokus: '50% 0%',
-      },
-      {
         fil: 'os-elevator.jpg',
-        alt: 'Sasja og Marcus tager et spejlbillede sammen i en elevator.',
+        alt: 'Sasja og Marcus i et spejlbillede. Han har jakken over armen og en pose i hånden.',
         tekst: 'Dig og mig.', // (udkast)
         fokus: '50% 0%',
       },
       {
+        fil: 'os-frisoer-grin.jpg',
+        alt: 'Marcus griner tæt på kameraet. Bag ham sidder Sasja med folie i håret, rækker tunge og laver peacetegn.',
+        // (udkast ud fra dine ord: "mærkelige ting for at se dig smile", "yndlingsaktivitet")
+        tekst: 'At gøre mærkelige ting for at se dig smile. Stadig en yndlingsaktivitet.',
+        fokus: '50% 70%',
+      },
+      {
         fil: 'sasja-spejl-graa.jpg',
-        alt: 'Sasja tager et roligt spejlbillede.',
+        alt: 'Sasja tager et roligt spejlbillede i en grå frakke.',
         tekst: 'Bare dig. Og det er mere end nok.', // (udkast)
-        fokus: '50% 28%',
+        format: '3 / 4',
+        fokus: '50% 20%',
       },
     ] satisfies Billede[],
   },

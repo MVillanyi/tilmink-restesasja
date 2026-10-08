@@ -3,27 +3,50 @@ import { indhold } from '../indhold';
 import Linjer from './Linjer.astro';
 import Tegning from './Tegning.astro';
 const k = indhold.kuvert;
+const navn = `${k.til} ${k.fra.replace('♥', '').trim()} ${k.knap}`;
 ---
 
-<section class="kuvert-lag" data-kuvert aria-label={`${k.til} ${k.fra.replace('♥', '').trim()}`}>
-  <div class="kuvert-scene">
-    <div class="kuvert" data-kuvert-papir>
-      <div class="kuvert-inderside" aria-hidden="true"></div>
-      <div class="kuvert-kort" aria-hidden="true">
-        <Tegning motiv="hjerte" />
-      </div>
-      <div class="kuvert-lomme">
-        <p class="kuvert-til"><Linjer tekst={k.til} /></p>
-        <p class="kuvert-fra"><Linjer tekst={k.fra} /></p>
-      </div>
-      <div class="kuvert-klap" aria-hidden="true"></div>
-      <div class="kuvert-segl" aria-hidden="true">
-        <Tegning motiv="hjerte" />
-      </div>
-    </div>
-  </div>
-  <button type="button" class="knap kuvert-knap" data-kuvert-knap>{k.knap}</button>
-</section>
+<div class="kuvert-lag" data-kuvert>
+  <!-- Hele kuverten er én stor knap – ingen præcise bevægelser nødvendige. -->
+  <button type="button" class="kuvert-knap" data-kuvert-knap aria-label={navn}>
+    <span class="kuvert-scene">
+      <span class="kuvert">
+        <span class="kuvert-inderside" aria-hidden="true"></span>
+        <span class="kuvert-kort" aria-hidden="true">
+          <span class="kuvert-kort-tekst">{k.kort}</span>
+          <Tegning motiv="hjerte" />
+        </span>
+        <span class="kuvert-lomme" aria-hidden="true">
+          <span class="kuvert-til"><Linjer tekst={k.til} /></span>
+          <span class="kuvert-fra"><Linjer tekst={k.fra} /></span>
+        </span>
+        <span class="kuvert-klap" aria-hidden="true"></span>
+        <span class="kuvert-segl" aria-hidden="true"><Tegning motiv="hjerte" /></span>
+        {
+          k.stempel && (
+            <svg class="kuvert-stempel" viewBox="-74 0 174 100" aria-hidden="true" focusable="false">
+              <defs>
+                <path id="stempel-bue" d="M 13 50 A 37 37 0 0 1 87 50" />
+              </defs>
+              <circle cx="50" cy="50" r="46" />
+              <circle cx="50" cy="50" r="33" />
+              <text class="stempel-bue">
+                <textPath href="#stempel-bue" startOffset="50%" text-anchor="middle">
+                  {k.stempel[0]}
+                </textPath>
+              </text>
+              <text class="stempel-dato" x="50" y="60" text-anchor="middle">
+                {k.stempel[1]}
+              </text>
+              <path d="M-70 36q6-5 12 0t12 0 12 0 12 0 12 0M-70 50q6-5 12 0t12 0 12 0 12 0 12 0M-70 64q6-5 12 0t12 0 12 0 12 0 12 0" />
+            </svg>
+          )
+        }
+      </span>
+    </span>
+    <span class="kuvert-etiket">{k.knap}</span>
+  </button>
+</div>
 
 <!-- Kuverten har sit eget lille script, så den altid kan åbnes. -->
 <script is:inline>
@@ -38,28 +61,33 @@ const k = indhold.kuvert;
     var knap = lag.querySelector('[data-kuvert-knap]');
     var roligt = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     var aaben = false;
+    var faerdig = false;
+    var ur;
+    var afslut = function () {
+      if (faerdig) return;
+      faerdig = true;
+      clearTimeout(ur);
+      rod.classList.remove('kuvert-lukket');
+      rod.classList.add('kuvert-aaben');
+      lag.classList.add('forsvinder');
+      window.scrollTo(0, 0);
+      var titel = document.querySelector('[data-forside-titel]');
+      if (titel) titel.focus({ preventScroll: true });
+      setTimeout(fjern, roligt ? 0 : 900);
+    };
     var aabn = function () {
-      if (aaben) return;
+      // Et tryk mere springer animationen over.
+      if (aaben) return afslut();
       aaben = true;
       try {
         sessionStorage.setItem('gave-aabnet', '1');
       } catch (e) {}
-      knap.disabled = true;
       lag.classList.add('aabner');
-      setTimeout(
-        function () {
-          rod.classList.remove('kuvert-lukket');
-          rod.classList.add('kuvert-aaben');
-          lag.classList.add('forsvinder');
-          window.scrollTo(0, 0);
-          var titel = document.querySelector('[data-forside-titel]');
-          if (titel) titel.focus({ preventScroll: true });
-          setTimeout(fjern, roligt ? 0 : 900);
-        },
-        roligt ? 0 : 1500,
-      );
+      ur = setTimeout(afslut, roligt ? 0 : 1500);
     };
     knap.addEventListener('click', aabn);
-    lag.querySelector('[data-kuvert-papir]').addEventListener('click', aabn);
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && aaben) afslut();
+    });
   })();
 </script>

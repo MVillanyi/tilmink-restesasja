@@ -5,15 +5,25 @@ import Linjer from './Linjer.astro';
 import Tegning from './Tegning.astro';
 const f = indhold.forside;
 const d = indhold.dage;
+// Datoerne står håndskrevet på polaroidens kant.
+const billede = { ...f.billede, tekst: f.datolinje };
 ---
 
 <header class="forside" id="start">
   <div class="forside-tekst">
-    <p class="forside-dato">{f.datolinje}</p>
     <h1 class="forside-titel" tabindex="-1" data-forside-titel>
       {f.overskrift.map((linje) => <span>{linje}</span>)}
     </h1>
     <p class="forside-under"><Linjer tekst={f.undertekst} /></p>
+  </div>
+  <div class="forside-billede">
+    <Foto
+      billede={billede}
+      forhold="3 / 4"
+      sizes="(min-width: 1000px) 500px, (min-width: 700px) 560px, 92vw"
+      vigtig
+      class="forside-foto print"
+    />
     {
       d.vis && (
         <p
@@ -28,13 +38,6 @@ const d = indhold.dage;
       )
     }
   </div>
-  <Foto
-    billede={f.billede}
-    forhold="4 / 5"
-    sizes="(min-width: 1000px) 520px, (min-width: 700px) 70vw, 100vw"
-    vigtig
-    class="forside-foto"
-  />
   <template data-hjerte>
     <span class="hjertetegn" role="img" aria-label="hjerte"><Tegning motiv="hjerte" /></span>
   </template>
