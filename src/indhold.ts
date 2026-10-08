@@ -205,7 +205,7 @@ export const indhold = {
   // 6 · Brevet. UDKAST – læs og ret, før du giver gaven.
   //     Bygget op omkring dine egne ord fra jeres beskeder.
   brev: {
-    godkendt: false,
+    godkendt: true,
     overskrift: 'Et brev til dig',
     billede: {
       fil: 'sasja-laeser.jpg',
