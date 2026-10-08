@@ -20,5 +20,6 @@ const t = indhold.fotovisning;
   <button type="button" class="lysbord-pil lysbord-pil--naeste" data-lysbord-naeste aria-label={t.naeste}>
     <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7"></path></svg>
   </button>
-  <p class="lysbord-taeller" data-lysbord-taeller aria-live="polite"></p>
+  <p class="lysbord-taeller" data-lysbord-taeller aria-hidden="true"></p>
+  <p class="sr" data-lysbord-besked aria-live="polite"></p>
 </dialog>

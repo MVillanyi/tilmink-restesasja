@@ -71,8 +71,11 @@ const navn = `${k.til} ${k.fra.replace('♥', '').trim()} ${k.knap}`;
       rod.classList.add('kuvert-aaben');
       lag.classList.add('forsvinder');
       window.scrollTo(0, 0);
-      var titel = document.querySelector('[data-forside-titel]');
-      if (titel) titel.focus({ preventScroll: true });
+      // Fokus flyttes, når forsiden faktisk er synlig.
+      requestAnimationFrame(function () {
+        var titel = document.querySelector('[data-forside-titel]');
+        if (titel) titel.focus({ preventScroll: true });
+      });
       setTimeout(fjern, roligt ? 0 : 900);
     };
     var aabn = function () {
@@ -83,6 +86,9 @@ const navn = `${k.til} ${k.fra.replace('♥', '').trim()} ${k.knap}`;
         sessionStorage.setItem('gave-aabnet', '1');
       } catch (e) {}
       lag.classList.add('aabner');
+      // Gør forsidebilledet klar, mens kuverten åbner.
+      var forsidebillede = document.querySelector('.forside-foto img');
+      if (forsidebillede && forsidebillede.decode) forsidebillede.decode().catch(function () {});
       ur = setTimeout(afslut, roligt ? 0 : 1500);
     };
     knap.addEventListener('click', aabn);

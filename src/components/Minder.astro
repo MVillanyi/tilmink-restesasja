@@ -14,9 +14,9 @@ const m = indhold.minder;
       m.kort.map((kort, i) => (
         <li class:list={['minde', `minde--${i + 1}`]} data-vis>
           {kort.tegning && <Tegning motiv={kort.tegning} class="minde-tegning" />}
-          {kort.stempel && <span class="stempel">{kort.stempel}</span>}
           <h3>{kort.titel}</h3>
           <p><Linjer tekst={kort.tekst} /></p>
+          {kort.stempel && <span class="stempel">{kort.stempel}</span>}
           {kort.hemmelighed && <Hemmelighed hemmelighed={kort.hemmelighed} />}
         </li>
       ))

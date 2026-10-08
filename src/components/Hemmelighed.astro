@@ -8,6 +8,7 @@ const { hemmelighed } = Astro.props as { hemmelighed: Hemmelighed };
 <details class="hemmelighed" data-hemmelighed>
   <summary>
     <span>{hemmelighed.knap}</span>
+    <span class="hemmelighed-plus" aria-hidden="true">+</span>
   </summary>
   <p>
     <Linjer tekst={hemmelighed.tekst} />

@@ -40,7 +40,7 @@ const stil = [forhold && `--forhold: ${forhold}`, `--fokus: ${billede.fokus ?? '
       quality={80}
       loading={vigtig ? 'eager' : 'lazy'}
       fetchpriority={vigtig ? 'high' : 'auto'}
-      decoding="async"
+      decoding={vigtig ? 'sync' : 'async'}
     />
     <span class="sr">{indhold.fotovisning.aabn}</span>
   </a>

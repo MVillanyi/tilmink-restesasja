@@ -20,9 +20,13 @@ function overgange() {
         }
       }
     },
-    { rootMargin: '0px 0px -8% 0px', threshold: 0.08 },
+    { rootMargin: '0px 0px -8% 0px', threshold: 0 },
   );
   ting.forEach((el) => io.observe(el));
+  // Det, der får tastaturfokus, skal også kunne ses med det samme.
+  document.addEventListener('focusin', (e) => {
+    (e.target as Element).closest?.('[data-vis]')?.classList.add('er-synlig');
+  });
 }
 
 /* ── Fotovisning ────────────────────────────────────────────── */
@@ -34,6 +38,7 @@ function fotovisning() {
   const img = dialog.querySelector<HTMLImageElement>('[data-lysbord-billede]')!;
   const tekst = dialog.querySelector<HTMLElement>('[data-lysbord-tekst]')!;
   const taeller = dialog.querySelector<HTMLElement>('[data-lysbord-taeller]')!;
+  const besked = dialog.querySelector<HTMLElement>('[data-lysbord-besked]');
   const forrige = dialog.querySelector<HTMLButtonElement>('[data-lysbord-forrige]')!;
   const naeste = dialog.querySelector<HTMLButtonElement>('[data-lysbord-naeste]')!;
   const luk = dialog.querySelector<HTMLButtonElement>('[data-lysbord-luk]')!;
@@ -50,6 +55,10 @@ function fotovisning() {
     tekst.textContent = a.dataset.tekst ?? '';
     tekst.hidden = !a.dataset.tekst;
     taeller.textContent = `${nu + 1} / ${links.length}`;
+    // Skærmlæsere får billedets beskrivelse og nummer at vide.
+    if (besked) {
+      besked.textContent = `Billede ${nu + 1} af ${links.length}. ${a.dataset.alt ?? ''} ${a.dataset.tekst ?? ''}`.trim();
+    }
     if (img.complete) img.classList.add('klar');
   };
 

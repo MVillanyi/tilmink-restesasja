@@ -224,7 +224,9 @@ a {
   inset: 0;
   z-index: 50;
   display: grid;
-  place-items: center;
+  place-content: safe center;
+  justify-items: center;
+  overflow-y: auto;
   padding: max(1.5rem, env(safe-area-inset-top)) var(--kant) max(1.5rem, env(safe-area-inset-bottom));
   background: var(--felt-vin);
   transition: opacity 0.9s ease, visibility 0s 0.9s;
@@ -239,7 +241,7 @@ a {
 .kuvert-knap {
   display: grid;
   justify-items: center;
-  gap: clamp(2rem, 6vh, 3rem);
+  gap: clamp(1.25rem, 5vh, 3rem);
   margin: 0;
   padding: 1.25rem;
   border: 0;
@@ -261,7 +263,8 @@ a {
 }
 
 .kuvert {
-  --b: min(80vw, 400px);
+  /* Bredden følger også skærmens højde, så knappen altid kan ses */
+  --b: min(80vw, 400px, max(180px, calc((100svh - 11rem) * 1.42)));
   position: relative;
   display: block;
   width: var(--b);
@@ -552,12 +555,11 @@ a {
 }
 
 .videre {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.7rem;
+  display: inline-block;
   justify-self: start;
   min-height: 48px;
   padding: 0.5rem 0;
+  text-wrap: balance;
   color: var(--vin);
   font-family: var(--serif);
   font-size: 1.2rem;
@@ -566,7 +568,10 @@ a {
   text-decoration: none;
 }
 .videre svg {
+  display: inline-block;
   width: 22px;
+  margin-left: 0.45rem;
+  vertical-align: -0.3em;
   fill: none;
   stroke: currentColor;
   stroke-width: 1.6;
@@ -624,6 +629,11 @@ a {
   font-weight: 500;
   line-height: 1.15;
 }
+.foto figcaption,
+.lysbord-figur figcaption {
+  flex: none;
+  text-wrap: balance;
+}
 .foto-dato {
   display: block;
   margin-top: 0.2rem;
@@ -669,6 +679,7 @@ a {
 }
 .ting-nr {
   display: block;
+  width: fit-content;
   color: var(--rosa-dyb);
   font-family: var(--haand);
   font-size: 3.4rem;
@@ -687,7 +698,7 @@ a {
 }
 .ting-aside {
   margin-top: 0.1rem;
-  color: var(--rosa-dyb);
+  color: #8c4f55;
   font-family: var(--haand);
   font-size: 1.45rem;
   font-weight: 600;
@@ -725,11 +736,9 @@ a {
   rotate: 0.9deg;
 }
 .ting--note:nth-child(even) .ting-nr {
+  top: -1.7rem;
   right: auto;
-  left: 1.1rem;
-}
-.ting--note:nth-child(even) h3 {
-  padding-left: 1.6rem;
+  left: 1.2rem;
 }
 .ting--note h3 {
   margin-top: 0;
@@ -810,8 +819,7 @@ a {
 .hemmelighed summary::-webkit-details-marker {
   display: none;
 }
-.hemmelighed summary::after {
-  content: '+';
+.hemmelighed-plus {
   font-family: var(--sans);
   font-size: 1rem;
   font-weight: 500;
@@ -825,7 +833,7 @@ a {
   border-style: solid;
   background: var(--rosa-lys);
 }
-.hemmelighed[open] summary::after {
+.hemmelighed[open] .hemmelighed-plus {
   rotate: 45deg;
 }
 .hemmelighed p {
@@ -1010,10 +1018,8 @@ a {
   position: relative;
   flex: 1 1 100%;
   padding: 1.7rem 1.5rem 1.6rem;
-  background:
-    linear-gradient(var(--papir), var(--papir)) padding-box,
-    repeating-linear-gradient(90deg, var(--rosa) 0 6px, transparent 6px 11px) border-box;
-  border: 1px solid transparent;
+  background: var(--papir);
+  border: 1.5px dashed var(--rosa);
   border-radius: 3px;
   box-shadow: var(--skygge-let);
 }
@@ -1026,9 +1032,8 @@ a {
   rotate: 0.8deg;
 }
 .minde:nth-child(3n + 2) {
-  background:
-    linear-gradient(#f8ebe6, #f8ebe6) padding-box,
-    repeating-linear-gradient(90deg, var(--rosa-dyb) 0 6px, transparent 6px 11px) border-box;
+  border-color: var(--rosa-dyb);
+  background: #f8ebe6;
 }
 .minde:nth-child(even) .minde-tegning {
   margin-left: auto;
@@ -1154,13 +1159,12 @@ a {
 .album-foto--3::before {
   content: '';
   position: absolute;
-  top: -11px;
-  left: 50%;
+  top: 2px;
+  left: -16px;
   z-index: 2;
-  width: 96px;
+  width: 92px;
   height: 26px;
-  translate: -50% 0;
-  rotate: 4deg;
+  rotate: -38deg;
   background: var(--tape);
 }
 .album-foto--3::before {
@@ -1398,7 +1402,9 @@ html:not(.js) .kuvert-igen {
   margin: 0;
   padding: 0;
   border: 0;
-  background: rgb(30 17 21 / 0.95);
+  background: rgb(30 17 21 / 0.97);
+  -webkit-backdrop-filter: blur(14px);
+  backdrop-filter: blur(14px);
   color: var(--elfenben);
 }
 .lysbord::backdrop {
@@ -1413,22 +1419,29 @@ html:not(.js) .kuvert-igen {
   }
 }
 .lysbord-scene {
-  display: grid;
-  place-items: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
   width: 100%;
   height: 100%;
   padding: calc(4.5rem + env(safe-area-inset-top)) 1rem calc(5.5rem + env(safe-area-inset-bottom));
 }
 .lysbord-figur {
-  display: grid;
-  justify-items: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
   gap: 0.9rem;
-  margin: 0;
+  min-height: 0;
   max-height: 100%;
+  margin: 0;
 }
+/* Billedet skrumper til den plads, der er tilbage efter billedteksten */
 .lysbord-figur img {
+  flex: 0 1 auto;
+  min-height: 0;
   max-width: min(92vw, 1100px);
-  max-height: calc(100dvh - 12rem - env(safe-area-inset-top) - env(safe-area-inset-bottom));
   width: auto;
   height: auto;
   object-fit: contain;
@@ -1664,8 +1677,7 @@ html:not(.js) .kuvert-igen {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     animation-delay: 0s !important;
-    transition-duration: 0.01ms !important;
-    transition-delay: 0s !important;
+    transition: none !important;
     scroll-behavior: auto !important;
   }
   .js [data-vis] {
