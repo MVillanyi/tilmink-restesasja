@@ -1,0 +1,108 @@
+---
+import { indhold } from '../indhold';
+import Linjer from './Linjer.astro';
+import Tegning from './Tegning.astro';
+const k = indhold.kuvert;
+const navn = `${k.til} ${k.fra.replace('♥', '').trim()} ${k.knap}`;
+---
+
+<div class="kuvert-lag" data-kuvert>
+  <!-- Hele kuverten er én stor knap – ingen præcise bevægelser nødvendige. -->
+  <button type="button" class="kuvert-knap" data-kuvert-knap aria-label={navn}>
+    <span class="kuvert-scene">
+      <span class="kuvert">
+        <span class="kuvert-inderside" aria-hidden="true"></span>
+        <span class="kuvert-kort" aria-hidden="true">
+          <span class="kuvert-kort-tekst">{k.kort}</span>
+          <Tegning motiv="hjerte" />
+        </span>
+        <span class="kuvert-lomme" aria-hidden="true">
+          <span class="kuvert-til"><Linjer tekst={k.til} /></span>
+          <span class="kuvert-fra"><Linjer tekst={k.fra} /></span>
+        </span>
+        <span class="kuvert-klap" aria-hidden="true"></span>
+        <span class="kuvert-segl" aria-hidden="true"><Tegning motiv="hjerte" /></span>
+        {
+          k.stempel && (
+            <svg class="kuvert-stempel" viewBox="-74 0 174 100" aria-hidden="true" focusable="false">
+              <defs>
+                <path id="stempel-bue" d="M 13 50 A 37 37 0 0 1 87 50" />
+              </defs>
+              <circle cx="50" cy="50" r="46" />
+              <circle cx="50" cy="50" r="33" />
+              <text class="stempel-bue">
+                <textPath href="#stempel-bue" startOffset="50%" text-anchor="middle">
+                  {k.stempel[0]}
+                </textPath>
+              </text>
+              <text class="stempel-dato" x="50" y="60" text-anchor="middle">
+                {k.stempel[1]}
+              </text>
+              <path d="M-70 36q6-5 12 0t12 0 12 0 12 0 12 0M-70 50q6-5 12 0t12 0 12 0 12 0 12 0M-70 64q6-5 12 0t12 0 12 0 12 0 12 0" />
+            </svg>
+          )
+        }
+      </span>
+    </span>
+    <span class="kuvert-etiket">{k.knap}</span>
+  </button>
+</div>
+
+<!-- Kuverten har sit eget lille script, så den altid kan åbnes. -->
+<script is:inline>
+  (function () {
+    var rod = document.documentElement;
+    var lag = document.querySelector('[data-kuvert]');
+    if (!lag) return;
+    var fokus = function () {
+      var titel = document.querySelector('[data-forside-titel]');
+      if (titel && document.activeElement !== titel) titel.focus({ preventScroll: true });
+    };
+    var fjern = function () {
+      if (lag.contains(document.activeElement)) fokus();
+      if (lag.parentNode) lag.parentNode.removeChild(lag);
+    };
+    if (!rod.classList.contains('kuvert-lukket')) return fjern();
+    var knap = lag.querySelector('[data-kuvert-knap]');
+    var roligt = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var aaben = false;
+    var faerdig = false;
+    var ur;
+    var t0 = 0;
+    var afslut = function () {
+      if (faerdig) return;
+      faerdig = true;
+      clearTimeout(ur);
+      rod.classList.remove('kuvert-lukket');
+      rod.classList.add('kuvert-aaben');
+      lag.classList.add('forsvinder');
+      window.scrollTo(0, 0);
+      // Fokus flyttes til overskriften, så snart forsiden er synlig.
+      void document.body.offsetWidth;
+      fokus();
+      requestAnimationFrame(fokus);
+      setTimeout(fjern, roligt ? 0 : 900);
+    };
+    var aabn = function () {
+      // Et tryk mere springer animationen over – men ikke et dobbelttryk ved et uheld.
+      if (aaben) {
+        if (Date.now() - t0 > 600) afslut();
+        return;
+      }
+      aaben = true;
+      t0 = Date.now();
+      try {
+        sessionStorage.setItem('gave-aabnet', '1');
+      } catch (e) {}
+      lag.classList.add('aabner');
+      // Gør forsidebilledet klar, mens kuverten åbner.
+      var forsidebillede = document.querySelector('.forside-foto img');
+      if (forsidebillede && forsidebillede.decode) forsidebillede.decode().catch(function () {});
+      ur = setTimeout(afslut, roligt ? 0 : 1500);
+    };
+    knap.addEventListener('click', aabn);
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && aaben) afslut();
+    });
+  })();
+</script>

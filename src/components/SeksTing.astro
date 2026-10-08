@@ -1,0 +1,44 @@
+---
+import { indhold } from '../indhold';
+import Foto from './Foto.astro';
+import Hemmelighed from './Hemmelighed.astro';
+import Linjer from './Linjer.astro';
+const s = indhold.seksTing;
+---
+
+<section class="seks" id="seks-ting" aria-labelledby="seks-titel">
+  <h2 class="sektion-titel" id="seks-titel" data-vis>{s.overskrift}</h2>
+  <ol class="seks-liste">
+    {
+      s.ting.map((t, i) => (
+        <li class:list={['ting', `ting--${i + 1}`, { 'ting--foto': t.billede, 'ting--note': !t.billede }]} data-vis>
+          <div class="ting-tekst">
+            <span class="ting-nr" aria-hidden="true">{i + 1}</span>
+            <h3>{t.titel}</h3>
+            {t.note && <p class="ting-aside">{t.note}</p>}
+            {t.stillinger && (
+              <p class="stillinger">
+                {t.stillinger.map((ord, j) => (
+                  <Fragment>
+                    {j > 0 && ' '}
+                    <span class={`stilling stilling--${j + 1}`}>{ord}</span>
+                  </Fragment>
+                ))}
+              </p>
+            )}
+            <p><Linjer tekst={t.tekst} /></p>
+            {t.hemmelighed && <Hemmelighed hemmelighed={t.hemmelighed} />}
+          </div>
+          {t.billede && (
+            <Foto
+              billede={t.billede}
+              forhold={i === 1 ? '4 / 5' : '3 / 4'}
+              sizes={i === 1 ? '(min-width: 1000px) 560px, 100vw' : '(min-width: 1000px) 400px, 80vw'}
+              class={i === 1 ? 'ting-foto' : 'ting-foto print'}
+            />
+          )}
+        </li>
+      ))
+    }
+  </ol>
+</section>

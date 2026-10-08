@@ -1,0 +1,51 @@
+---
+import { indhold } from '../indhold';
+import Foto from './Foto.astro';
+import Linjer from './Linjer.astro';
+const b = indhold.brev;
+const afsnit = b.tekst
+  .trim()
+  .split(/\n\s*\n/)
+  .map((a) => a.trim())
+  .filter(Boolean);
+const visUdkast = import.meta.env.DEV && !b.godkendt;
+---
+
+<section class="brev" id="brev" aria-labelledby="brev-titel">
+  <h2 class="sektion-titel" id="brev-titel" data-vis>{b.overskrift}</h2>
+  <div class="brev-opslag">
+    <div class="brev-billede">
+      <svg class="clips" viewBox="0 0 24 64" aria-hidden="true" focusable="false">
+        <path d="M9 52V16a5.5 5.5 0 0 1 11 0v34a8.5 8.5 0 0 1-17 0V12" />
+      </svg>
+      <Foto
+        billede={b.billede}
+        forhold="1 / 1"
+        sizes="(min-width: 1000px) 420px, 92vw"
+        class="brev-foto print"
+        data-vis
+      />
+    </div>
+    <article class="brev-papir" data-vis>
+      {
+        visUdkast && (
+          <p class="udkast-note">
+            Udkast · kun synligt, når du kører siden lokalt. Sæt <code>godkendt: true</code> i
+            src/indhold.ts, når brevet er klar.
+          </p>
+        )
+      }
+      <p class="brev-hilsen">{b.hilsen}</p>
+      {
+        afsnit.map((a) => (
+          <p>
+            <Linjer tekst={a} />
+          </p>
+        ))
+      }
+      {b.afslutning && <p class="brev-afslutning"><Linjer tekst={b.afslutning} /></p>}
+      <p class="brev-underskrift" data-vis>{b.underskrift}</p>
+      {b.ps && <p class="brev-ps"><Linjer tekst={b.ps} /></p>}
+    </article>
+  </div>
+</section>

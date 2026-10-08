@@ -1,0 +1,27 @@
+---
+import { indhold } from '../indhold';
+import Linjer from './Linjer.astro';
+import Tegning from './Tegning.astro';
+const s = indhold.slut;
+---
+
+<footer class="slut" id="slut" data-vis>
+  {s.forLinje && <p class="slut-for"><Linjer tekst={s.forLinje} /></p>}
+  <Tegning motiv="hjerte" class="slut-hjerte" />
+  <p class="slut-linje"><Linjer tekst={s.linje} /></p>
+  <p class="slut-underskrift"><Linjer tekst={s.underskrift} /></p>
+  <div class="slut-links">
+    <a class="tilbage" href="#start">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20V5m-6 6 6-6 6 6"></path></svg>
+      <span>{s.tilbage}</span>
+    </a>
+    {
+      s.kuvertIgen && (
+        <button type="button" class="tilbage kuvert-igen" data-kuvert-igen>
+          <Tegning motiv="hjerte" />
+          <span>{s.kuvertIgen}</span>
+        </button>
+      )
+    }
+  </div>
+</footer>

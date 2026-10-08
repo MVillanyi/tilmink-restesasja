@@ -1,0 +1,40 @@
+---
+import { indhold } from '../indhold';
+import Foto from './Foto.astro';
+const f = indhold.fjollet;
+const [hoved, ...resten] = f.billeder;
+---
+
+<section class="fjollet" id="fjollet" aria-labelledby="fjollet-titel">
+  <div class="fjollet-indre">
+    <div class="fjollet-tekst">
+      {f.overtekst && <p class="fjollet-over" data-vis>{f.overtekst}</p>}
+      <h2 class="fjollet-titel" id="fjollet-titel" data-vis>
+        <span class="fjollet-linje1">{f.overskrift[0]}</span>
+        {f.overskrift[1] && <span class="fjollet-linje2">{f.overskrift[1]}</span>}
+      </h2>
+    </div>
+    {
+      hoved && (
+        <Foto
+          billede={hoved}
+          forhold="4 / 5"
+          sizes="(min-width: 1000px) 560px, 92vw"
+          class="fjollet-foto fjollet-foto--1 print"
+          data-vis
+        />
+      )
+    }
+    {
+      resten.map((b, i) => (
+        <Foto
+          billede={b}
+          forhold="4 / 5"
+          sizes="(min-width: 1000px) 380px, 72vw"
+          class={`fjollet-foto fjollet-foto--${i + 2} print`}
+          data-vis
+        />
+      ))
+    }
+  </div>
+</section>

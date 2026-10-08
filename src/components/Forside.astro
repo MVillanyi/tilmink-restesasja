@@ -1,0 +1,48 @@
+---
+import { indhold } from '../indhold';
+import Foto from './Foto.astro';
+import Linjer from './Linjer.astro';
+import Tegning from './Tegning.astro';
+const f = indhold.forside;
+const d = indhold.dage;
+// Datoerne står håndskrevet på polaroidens kant.
+const billede = { ...f.billede, tekst: f.datolinje };
+---
+
+<header class="forside" id="start">
+  <div class="forside-tekst">
+    <h1 class="forside-titel" tabindex="-1" data-forside-titel>
+      {f.overskrift.map((linje) => <span>{linje}</span>)}
+    </h1>
+    <p class="forside-under"><Linjer tekst={f.undertekst} /></p>
+  </div>
+  <div class="forside-billede">
+    <Foto
+      billede={billede}
+      forhold="3 / 4"
+      sizes="(min-width: 1000px) 500px, (min-width: 700px) 560px, 92vw"
+      vigtig
+      class="forside-foto print"
+    />
+    {
+      d.vis && (
+        <p
+          class="dage"
+          data-dage
+          data-start={d.start}
+          data-tekst={d.tekst}
+          data-jubilaeum={d.jubilaeum}
+          data-jubilaeum-tekst={d.jubilaeumTekst}
+          hidden
+        />
+      )
+    }
+  </div>
+  <template data-hjerte>
+    <span class="hjertetegn" aria-hidden="true"><Tegning motiv="hjerte" /></span>
+  </template>
+  <a class="videre" href="#seks-ting">
+    <span>{f.videre}</span>
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v15m-6-6 6 6 6-6"></path></svg>
+  </a>
+</header>

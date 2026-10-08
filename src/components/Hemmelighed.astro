@@ -1,0 +1,17 @@
+---
+import type { Hemmelighed } from '../lib/typer';
+import Linjer from './Linjer.astro';
+import Tegning from './Tegning.astro';
+const { hemmelighed } = Astro.props as { hemmelighed: Hemmelighed };
+---
+
+<details class="hemmelighed" data-hemmelighed>
+  <summary>
+    <span>{hemmelighed.knap}</span>
+    <span class="hemmelighed-plus" aria-hidden="true">+</span>
+  </summary>
+  <p>
+    <Linjer tekst={hemmelighed.tekst} />
+    <span class="hjerteslag" data-hjerteslag><Tegning motiv="hjerte" /></span>
+  </p>
+</details>

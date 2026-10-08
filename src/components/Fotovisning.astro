@@ -1,0 +1,25 @@
+---
+import { indhold } from '../indhold';
+const t = indhold.fotovisning;
+---
+
+<dialog class="lysbord" data-lysbord aria-label="Fotovisning">
+  <div class="lysbord-scene" data-lysbord-scene>
+    <figure class="lysbord-figur">
+      <img data-lysbord-billede alt="" />
+      <figcaption data-lysbord-tekst></figcaption>
+    </figure>
+  </div>
+  <button type="button" class="lysbord-luk" data-lysbord-luk>
+    <span>{t.luk}</span>
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"></path></svg>
+  </button>
+  <button type="button" class="lysbord-pil lysbord-pil--forrige" data-lysbord-forrige aria-label={t.forrige}>
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7"></path></svg>
+  </button>
+  <button type="button" class="lysbord-pil lysbord-pil--naeste" data-lysbord-naeste aria-label={t.naeste}>
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7"></path></svg>
+  </button>
+  <p class="lysbord-taeller" data-lysbord-taeller aria-hidden="true"></p>
+  <p class="sr" data-lysbord-besked aria-live="polite"></p>
+</dialog>

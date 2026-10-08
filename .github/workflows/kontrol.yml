@@ -1,0 +1,26 @@
+# Bygger og kontrollerer siden på pull requests (udgiver ikke noget).
+name: Kontrol
+
+on:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-node@v6
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+      - run: npm ci
+      - name: Er brevet godkendt?
+        run: |
+          if grep -qE '^\s*godkendt:\s*false' src/indhold.ts; then
+            echo "::warning title=Brevet er stadig et udkast::Sæt godkendt: true i src/indhold.ts, før siden udgives."
+          fi
+      - run: npm run build
+      - run: npm run kontrol
