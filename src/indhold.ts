@@ -58,7 +58,7 @@ export const indhold = {
   dage: {
     vis: true,
     start: '2026-04-19',
-    tekst: '{dage} dage med dig indtil videre.',
+    tekst: '{dage} dage med dig – og vi tæller videre.',
     // På selve seksmånedersdagen står der i stedet:
     jubilaeum: '2026-10-19',
     jubilaeumTekst: 'Seks måneder i dag ♥',
@@ -72,11 +72,11 @@ export const indhold = {
         titel: 'Dit smil.',
         note: '(Måske lige nu?)', // (udkast – gaven er jo selv en overraskelse)
         // (dine ord)
-        tekst: 'Det helt særlige smil, du får, når jeg gør dig glad med noget, du ikke havde regnet med. Det er så meget værd at se dig smile sådan.',
+        tekst: 'Det helt særlige smil, du får, når jeg gør dig glad med noget, du ikke havde regnet med. Det er så meget det værd at se dig smile sådan.',
         billede: {
           fil: 'sasja-ved-bordet.jpg',
           alt: 'Sasja ved et bord med spisepinde i hånden og et lille smil.',
-          tekst: 'På den anden side af bordet sidder min yndlings.', // (udkast)
+          tekst: 'Dig, på den anden side af bordet.', // (udkast)
           fokus: '50% 22%',
         },
       },
@@ -104,9 +104,10 @@ export const indhold = {
         tekst: 'Du har smukke øjne. Og du er smuk hver dag i mine.',
       },
       {
-        titel: 'At du er dig.',
-        // (dine ord)
-        tekst: 'Du er helt fantastisk, som du er.',
+        titel: 'Din kærlige side.',
+        // (udkast ud fra Sasjas beskeder, hvor hun lige skriver for at minde dig om,
+        //  at hun elsker dig – og dine ord om at passe på hinanden)
+        tekst: 'Når du lige skriver for at minde mig om, at du elsker mig. Og at du har lyst til at passe på mig, ligesom jeg vil med dig.',
       },
     ] satisfies Ting[],
   },
@@ -139,18 +140,18 @@ export const indhold = {
       {
         titel: 'Dig, mig og paraplyen.',
         // (dine ord)
-        tekst: 'Vores første ordentlige date, og hvordan du løb med paraplyen. Du var så hamrende glad.',
+        tekst: 'Vores første ordentlige date. Dig med paraplyen og den glæde, jeg stadig husker.',
         tegning: 'paraply',
       },
       {
         titel: 'Vores tur til Sverige.',
         // (dine ord: "super hyggelig")
-        tekst: 'Den var super hyggelig. Jeg vil rigtig gerne af sted med dig igen.',
+        tekst: 'Den var superhyggelig. Jeg vil rigtig gerne af sted med dig igen.',
         tegning: 'sverige',
       },
       {
         titel: 'En dør ind til din verden.',
-        // (dine ord fra dagen efter)
+        // (dine ord fra aftenen 30. maj; 'Roskilde-pladsen' er Sasjas ord fra dagen efter)
         tekst: 'Dagen på Roskilde-pladsen. Tak, fordi du lukkede mig ind. Jeg glæder mig til at være med mange gange endnu.',
         tegning: 'doer',
       },
@@ -194,7 +195,7 @@ export const indhold = {
       {
         fil: 'sasja-spejl-graa.jpg',
         alt: 'Sasja tager et roligt spejlbillede i en grå frakke.',
-        tekst: 'Bare dig. Og det er mere end nok.', // (udkast)
+        tekst: 'Du er helt fantastisk, som du er.', // (dine ord)
         format: '3 / 4',
         fokus: '50% 20%',
       },
@@ -215,19 +216,17 @@ export const indhold = {
     hilsen: 'Min skat,',
     // Hvert afsnit adskilles af en tom linje.
     tekst: `
-Seks måneder med dig. Jeg ville gerne give dig noget, du kan vende tilbage til. Et sted, hvor jeg får sat ord på, hvor meget jeg elsker dig, og på alle de små ting ved dig, der betyder så meget for mig.
+Et halvt år med dig. Jeg ville gerne give dig noget, du kan vende tilbage til. Et sted, hvor jeg får sat ord på, hvor meget jeg elsker dig, og på alle de små ting ved dig, der betyder så meget for mig.
 
 Du er det dejligste, sødeste menneske, og jeg er så glad for den tid, vi har sammen. Du giver mig så meget varme i hjertet. Jeg elsker de små øjeblikke, hvor du pludselig dukker op i mine tanker, og jeg sidder og smiler helt fjollet for mig selv.
 
-Jeg gør gerne mærkelige ting for at se dig smile. Og når jeg overrasker dig, får du det der helt særlige smil, som jeg ikke kan få nok af. Det gør også mig så glad.
+Jeg elsker din kærlige side. Og din fjollede side, og hvor tossede vi kan være sammen. Når jeg overrasker dig og ser dig blive glad, gør det også mig så glad.
 
-Jeg tænker stadig på vores første ordentlige date, og hvordan du løb med paraplyen. Du var så hamrende glad. Det er sådan et lille øjeblik, der bliver ved med at sidde i mig, fordi det var så meget dig.
+Jeg tænker stadig på vores første ordentlige date, og hvordan du løb med paraplyen. Du var så hamrende glad. Det er sådan et lille øjeblik, jeg kan se helt tydeligt for mig, fordi det var så meget dig.
 
-Men det er nok de helt almindelige ting, jeg holder allermest af. At vågne med dig og ikke have travlt. At holde dig på låret, mens vi kører. At kunne dufte dig på puden i sofaen. At se dig forsvinde ind i en god bog. Og at holde om dig og høre dit hjerte banke afsted og så stille og roligt falde til ro.
+Men det er nok de helt almindelige ting, jeg holder allermest af. At vågne med dig og ikke have travlt. At holde dig på låret, mens vi kører. At kunne dufte dig på puden i sofaen. At se dig forsvinde ind i en bog. Og at holde om dig og høre dit hjerte banke af sted og så stille og roligt falde til ro. Den ro, der kommer, når vi er tæt på hinanden, er noget af det dejligste, jeg kender.
 
-Det gør mig så glad, at du har lyst til at passe på mig, ligesom jeg vil passe på dig.
-
-Jeg vil virkelig gerne det her med dig. Flere ture, flere morgener, flere kram, flere bøger og alle de minder, vi ikke kender endnu.
+Og jeg glæder mig til alt det, der kommer. Flere ture, flere morgener, flere kram, flere bøger og alle de minder, vi ikke kender endnu.
 
 Tillykke med vores seks måneder, min skat.
 
@@ -241,7 +240,7 @@ Og så siger jeg det bare igen, for tusinde gang, og der kommer mange tusinde en
 
   // 7 · Afslutningen
   slut: {
-    forLinje: 'Jeg glæder mig til alle de små ting, vi endnu har til gode.', // (udkast)
+    forLinje: '', // en lille linje over afslutningen, hvis du vil have en
     linje: 'Min yndlings. Jeg elsker dig.',
     underskrift: 'Din Marcus ♥',
     tilbage: 'Tilbage til begyndelsen',
