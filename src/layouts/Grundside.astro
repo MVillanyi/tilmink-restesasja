@@ -23,11 +23,14 @@ const delingsbillede = new URL(`${base}deling.png`, Astro.site);
     <meta name="color-scheme" content="only light" />
     <meta name="theme-color" content="#f6efe6" />
     <meta property="og:type" content="website" />
+    <meta property="og:url" content={new URL(base, Astro.site).href} />
+    <meta property="og:locale" content="da_DK" />
     <meta property="og:title" content={titel} />
     <meta property="og:description" content={beskrivelse} />
     <meta property="og:image" content={delingsbillede.href} />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="En lyserød kuvert med et hjerte: Til Sasja. Fra mig." />
     <meta name="twitter:card" content="summary_large_image" />
     <link rel="icon" href={`${base}favicon.svg`} type="image/svg+xml" />
     <link rel="apple-touch-icon" href={`${base}apple-touch-icon.png`} />

@@ -36,6 +36,14 @@ jobs:
 
       - run: npm ci
 
+      # Brevet er et udkast, indtil du sætter godkendt: true i src/indhold.ts.
+      - name: Er brevet godkendt?
+        run: |
+          if grep -qE '^\s*godkendt:\s*false' src/indhold.ts; then
+            echo "::error title=Brevet er ikke godkendt::Læs brevet, og sæt godkendt: true i src/indhold.ts. Så udgives siden."
+            exit 1
+          fi
+
       - name: Byg siden
         run: npm run build
         env:

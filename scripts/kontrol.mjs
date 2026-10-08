@@ -4,7 +4,18 @@ import { readFile, readdir, stat } from 'node:fs/promises';
 import { join, relative, sep } from 'node:path';
 
 const dist = new URL('../dist/', import.meta.url).pathname;
-const base = ('/' + (process.env.BASE_PATH ?? '/tilmink-restesasja').replace(/^\/+|\/+$/g, '') + '/').replace(/^\/\/$/, '/');
+
+// Base-stien læses fra selve den byggede side, medmindre BASE_PATH er sat.
+async function findBase() {
+  if (process.env.BASE_PATH !== undefined) return process.env.BASE_PATH;
+  try {
+    const html = await readFile(join(dist, 'index.html'), 'utf8');
+    const m = html.match(/(?:href|src)="([^"]*?)_astro\//);
+    if (m) return m[1];
+  } catch {}
+  return '/tilmink-restesasja';
+}
+const base = ('/' + (await findBase()).replace(/^\/+|\/+$/g, '') + '/').replace(/^\/\/$/, '/');
 
 async function* filerI(dir) {
   for (const navn of await readdir(dir)) {

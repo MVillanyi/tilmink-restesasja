@@ -54,7 +54,12 @@ const navn = `${k.til} ${k.fra.replace('♥', '').trim()} ${k.knap}`;
     var rod = document.documentElement;
     var lag = document.querySelector('[data-kuvert]');
     if (!lag) return;
+    var fokus = function () {
+      var titel = document.querySelector('[data-forside-titel]');
+      if (titel && document.activeElement !== titel) titel.focus({ preventScroll: true });
+    };
     var fjern = function () {
+      if (lag.contains(document.activeElement)) fokus();
       if (lag.parentNode) lag.parentNode.removeChild(lag);
     };
     if (!rod.classList.contains('kuvert-lukket')) return fjern();
@@ -63,6 +68,7 @@ const navn = `${k.til} ${k.fra.replace('♥', '').trim()} ${k.knap}`;
     var aaben = false;
     var faerdig = false;
     var ur;
+    var t0 = 0;
     var afslut = function () {
       if (faerdig) return;
       faerdig = true;
@@ -71,17 +77,20 @@ const navn = `${k.til} ${k.fra.replace('♥', '').trim()} ${k.knap}`;
       rod.classList.add('kuvert-aaben');
       lag.classList.add('forsvinder');
       window.scrollTo(0, 0);
-      // Fokus flyttes, når forsiden faktisk er synlig.
-      requestAnimationFrame(function () {
-        var titel = document.querySelector('[data-forside-titel]');
-        if (titel) titel.focus({ preventScroll: true });
-      });
+      // Fokus flyttes til overskriften, så snart forsiden er synlig.
+      void document.body.offsetWidth;
+      fokus();
+      requestAnimationFrame(fokus);
       setTimeout(fjern, roligt ? 0 : 900);
     };
     var aabn = function () {
-      // Et tryk mere springer animationen over.
-      if (aaben) return afslut();
+      // Et tryk mere springer animationen over – men ikke et dobbelttryk ved et uheld.
+      if (aaben) {
+        if (Date.now() - t0 > 600) afslut();
+        return;
+      }
       aaben = true;
+      t0 = Date.now();
       try {
         sessionStorage.setItem('gave-aabnet', '1');
       } catch (e) {}

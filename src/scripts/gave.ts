@@ -48,9 +48,24 @@ function fotovisning() {
   const vis = (i: number) => {
     nu = (i + links.length) % links.length;
     const a = links[nu];
+    const lille = a.querySelector('img');
+    const forhaand = lille?.complete && lille.naturalWidth ? lille.currentSrc : '';
     img.classList.remove('klar');
     img.onload = () => img.classList.add('klar');
-    img.src = a.href;
+    // Vis det lille billede med det samme, og skift til det skarpe, når det er hentet.
+    img.onerror = () => {
+      if (forhaand && img.src !== forhaand) img.src = forhaand;
+    };
+    if (forhaand) {
+      img.src = forhaand;
+      const fuld = new Image();
+      fuld.onload = () => {
+        if (links[nu] === a) img.src = a.href;
+      };
+      fuld.src = a.href;
+    } else {
+      img.src = a.href;
+    }
     img.alt = a.dataset.alt ?? '';
     tekst.textContent = a.dataset.tekst ?? '';
     tekst.hidden = !a.dataset.tekst;
@@ -59,7 +74,11 @@ function fotovisning() {
     if (besked) {
       besked.textContent = `Billede ${nu + 1} af ${links.length}. ${a.dataset.alt ?? ''} ${a.dataset.tekst ?? ''}`.trim();
     }
-    if (img.complete) img.classList.add('klar');
+    if (img.complete && img.naturalWidth) img.classList.add('klar');
+    // Hent naboerne i forvejen, så pilene føles hurtige.
+    [nu + 1, nu - 1].forEach((j) => {
+      new Image().src = links[(j + links.length) % links.length].href;
+    });
   };
 
   links.forEach((a, i) =>
@@ -171,8 +190,17 @@ function kuvertIgen() {
   });
 }
 
+/* ── Udskrift ───────────────────────────────────────────────── */
+function udskrift() {
+  addEventListener('beforeprint', () => {
+    document.querySelectorAll<HTMLImageElement>('img[loading="lazy"]').forEach((i) => (i.loading = 'eager'));
+    document.querySelectorAll('[data-vis]').forEach((e) => e.classList.add('er-synlig'));
+  });
+}
+
 overgange();
 kuvertIgen();
+udskrift();
 fotovisning();
 dagtaeller();
 kram();

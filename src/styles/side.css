@@ -250,6 +250,7 @@ a {
   color: inherit;
   font: inherit;
   cursor: pointer;
+  touch-action: manipulation;
   -webkit-tap-highlight-color: transparent;
 }
 .kuvert-knap:focus-visible {
@@ -812,6 +813,7 @@ a {
   line-height: 1;
   list-style: none;
   cursor: pointer;
+  -webkit-user-select: none;
   user-select: none;
   transition: background-color 0.25s, border-color 0.25s;
   -webkit-tap-highlight-color: transparent;
@@ -1119,10 +1121,12 @@ a {
   right: 0;
   height: 18px;
   background: var(--havre-lys);
+  -webkit-mask: radial-gradient(9px at 50% 0, #000 98%, transparent) 50% / 18px 100% repeat-x;
   mask: radial-gradient(9px at 50% 0, #000 98%, transparent) 50% / 18px 100% repeat-x;
 }
 .album::before {
   top: -17px;
+  -webkit-mask-image: radial-gradient(9px at 50% 100%, #000 98%, transparent);
   mask-image: radial-gradient(9px at 50% 100%, #000 98%, transparent);
 }
 .album::after {
@@ -1427,7 +1431,13 @@ html:not(.js) .kuvert-igen {
   height: 100%;
   padding: calc(4.5rem + env(safe-area-inset-top)) 1rem calc(5.5rem + env(safe-area-inset-bottom));
 }
+.lysbord .sr {
+  top: 0;
+  left: 0;
+}
+/* Tryk ved siden af billedet lander på scenen og lukker */
 .lysbord-figur {
+  pointer-events: none;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -1449,6 +1459,10 @@ html:not(.js) .kuvert-igen {
   box-shadow: 0 20px 60px rgb(0 0 0 / 0.45);
   opacity: 0;
   transition: opacity 0.35s ease;
+}
+.lysbord-figur img,
+.lysbord-figur figcaption {
+  pointer-events: auto;
 }
 .lysbord-figur img.klar {
   opacity: 1;
@@ -1515,6 +1529,28 @@ html:not(.js) .kuvert-igen {
   color: rgb(246 239 230 / 0.75);
   font-size: 0.85rem;
   letter-spacing: 0.12em;
+}
+
+/* Telefon på langs: billedet får hele højden, knapperne flytter ud til siden */
+@media (orientation: landscape) and (max-height: 500px) {
+  .lysbord-scene {
+    padding: calc(0.75rem + env(safe-area-inset-top)) max(5rem, calc(4rem + env(safe-area-inset-right)))
+      calc(0.75rem + env(safe-area-inset-bottom)) max(5rem, calc(4rem + env(safe-area-inset-left)));
+  }
+  .lysbord-pil {
+    top: 50%;
+    bottom: auto;
+    translate: 0 -50%;
+  }
+  .lysbord-taeller {
+    top: 1.3rem;
+    bottom: auto;
+    left: calc(1.2rem + env(safe-area-inset-left));
+    translate: none;
+  }
+  .lysbord-figur figcaption {
+    font-size: 1.2rem;
+  }
 }
 
 /* ════════════════════════════════════════════════════════════════
@@ -1664,6 +1700,41 @@ html:not(.js) .kuvert-igen {
   .brev-billede {
     position: sticky;
     top: 14vh;
+  }
+}
+
+/* ════════════════════════════════════════════════════════════════
+   Udskrift
+   ════════════════════════════════════════════════════════════════ */
+@media print {
+  .js [data-vis],
+  .js .fjollet-titel[data-vis] .fjollet-linje2,
+  .js .brev-underskrift[data-vis] {
+    opacity: 1 !important;
+    translate: none !important;
+    clip-path: none !important;
+    transition: none !important;
+    animation: none !important;
+  }
+  .js.kuvert-lukket main {
+    visibility: visible;
+  }
+  .kuvert-lag,
+  .lysbord,
+  .videre,
+  .slut-links,
+  .hemmelighed summary {
+    display: none !important;
+  }
+  .foto,
+  .minde,
+  .ting,
+  .brev-papir > p {
+    break-inside: avoid;
+  }
+  .sektion-titel,
+  .fjollet-titel {
+    break-after: avoid;
   }
 }
 

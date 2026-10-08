@@ -2,7 +2,7 @@
 
 En lille hjemmeside til Sasja på vores seksmånedersdag, 19. oktober 2026.
 Hun åbner en kuvert, og så kommer forsiden, seks ting jeg elsker ved hende,
-små minder, et album, et brev og en afslutning.
+hendes fjollede side, små minder, et album, et brev og en afslutning.
 
 Siden er statisk (ingen server, ingen database) og bygges med
 [Astro](https://astro.build). Den udgives automatisk på GitHub Pages:
@@ -21,8 +21,10 @@ Siden er statisk (ingen server, ingen database) og bygges med
   - `(Sasjas ord)` er hendes formulering, gengivet som hendes.
   - `(udkast)` er ny tekst skrevet til gaven. Den må du rette frit.
 - **Brevet er et udkast.** Læs det, ret det, og sæt `godkendt: true`.
-  Indtil da viser siden en lille påmindelse over brevet, men kun når du kører
-  den på din egen computer. Sasja ser den aldrig.
+  Indtil da viser `npm run dev` en lille påmindelse over brevet, og
+  udgivelsen på GitHub Pages stopper med beskeden *Brevet er ikke godkendt*,
+  så et uredigeret udkast aldrig kommer ud ved et uheld. Sasja ser aldrig
+  påmindelsen.
 - Et kort eller en ting fjernes ved at slette hele `{ ... },`-blokken.
 - De små skjulte noter (`hemmelighed`) og efterskriften (`ps`) kan rettes
   eller fjernes på samme måde.
@@ -56,7 +58,7 @@ ikke med på den udgivne side.
 | `sasja-ved-bordet.jpg`    | IMG_0010.jpeg                              | Dit smil                       |
 | `os-fjollede-ansigter.jpg`| IMG_2587.jpeg                              | Din fjollede side              |
 | `os-frisoer-grin.jpg`     | 74030329-7465-4670-91B3-F15CC3B3A01E.jpeg  | Albummet                       |
-| `sasja-folie.jpg`         | IMG_0093.jpeg                              | Albummet                       |
+| `sasja-folie.jpg`         | IMG_0093.jpeg                              | Din fjollede side              |
 | `os-elevator.jpg`         | IMG_2870.jpeg                              | Albummet                       |
 | `sasja-spejl-graa.jpg`    | 35AAFD3F-F3FD-400C-9CC1-858B678C96E5.jpeg  | Albummet                       |
 | `sasja-laeser.jpg`        | IMG_0024(1).jpeg                           | Brevet                         |
@@ -80,10 +82,14 @@ når du gemmer en ændring.
 Sådan ser du den færdige udgave, præcis som den bliver udgivet:
 
 ```sh
-npm run build      # bygger siden til mappen dist/
+npm run build      # tjekker indhold.ts for stavefejl i nøglerne og bygger til dist/
 npm run kontrol    # tjekker, at alle billeder og links findes
 npm run preview    # viser dist/ på http://localhost:4321/tilmink-restesasja/
 ```
+
+Skriver du fx `tkest:` i stedet for `tekst:` i `src/indhold.ts`, stopper
+`npm run build` med en besked om, hvad der er galt, i stedet for stille at
+springe teksten over.
 
 ## Udgiv på GitHub Pages
 
@@ -92,7 +98,8 @@ hver gang `main` opdateres. Første gang skal du kun gøre én ting:
 
 1. Gå til repositoryets **Settings → Pages**.
 2. Under **Build and deployment → Source** vælger du **GitHub Actions**.
-3. Flet pull requesten ind i `main` (eller kør workflowet
+3. Sæt `godkendt: true` ved brevet i `src/indhold.ts`, når du er tilfreds.
+4. Flet pull requesten ind i `main` (eller kør workflowet
    **Actions → Udgiv på GitHub Pages → Run workflow**).
 
 Efter et minuts tid ligger siden på https://mvillanyi.github.io/tilmink-restesasja/.
@@ -101,6 +108,10 @@ Godt at vide:
 
 - Alle med linket kan se siden. Søgemaskiner bliver bedt om at holde sig væk
   (`noindex`), og forhåndsvisningen, når du sender linket, viser kun kuverten.
+- **Mens repositoryet er offentligt, kan alt i det læses på github.com** –
+  også brevudkastet, de skjulte noter, kommentarerne i `indhold.ts`,
+  reservebillederne og hele historikken. Hold det privat, indtil gaven er
+  givet, og gør det offentligt lige før du udgiver.
 - GitHub Pages fra et **privat** repository kræver GitHub Pro (eller en betalt
   organisation). På en gratis konto går siden offline, mens repositoryet er
   privat, og kommer igen, når det bliver offentligt, og workflowet har kørt.
@@ -125,7 +136,12 @@ forsvinder af sig selv, fordi workflowet læser adressen fra Settings → Pages.
 
 En `CNAME`-fil er ikke nødvendig, når siden udgives med GitHub Actions.
 Vil du bygge til et domæne på din egen computer, kan du sætte adressen selv:
-`SITE_URL=https://ditdomæne.dk BASE_PATH= npm run build`.
+
+```sh
+SITE_URL=https://ditdomæne.dk BASE_PATH= npm run build
+npm run kontrol
+BASE_PATH= npm run preview
+```
 
 ## Opbygning
 
@@ -133,7 +149,7 @@ Vil du bygge til et domæne på din egen computer, kan du sætte adressen selv:
 src/
   indhold.ts            ← al tekst og alle billedvalg
   assets/billeder/      ← fotografierne
-  components/           ← kuverten, forsiden, seks ting, minder, album, brev, slut
+  components/           ← kuverten, forsiden, seks ting, fjollet, minder, album, brev, slut
   styles/side.css       ← farver, skrift og layout
   scripts/gave.ts       ← fotovisning, rolige overgange og dagtæller
 astro.config.mjs        ← adresse og undermappe
