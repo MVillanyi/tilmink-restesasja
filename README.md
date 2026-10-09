@@ -108,7 +108,7 @@ Godt at vide:
 
 - Alle med linket kan se siden. Søgemaskiner bliver bedt om at holde sig væk
   (`noindex`), og forhåndsvisningen, når du sender linket, viser kun kuverten.
-- **Mens repositoryet er offentligt, kan alt i det læses på github.com** –
+- **Mens repositoryet er offentligt, kan alt i det læses på github.com**. Det gælder
   også brevudkastet, de skjulte noter, kommentarerne i `indhold.ts`,
   reservebillederne og hele historikken. Hold det privat, indtil gaven er
   givet, og gør det offentligt lige før du udgiver.
