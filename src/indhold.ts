@@ -112,7 +112,7 @@ export const indhold = {
         titel: 'Din kærlige side.',
         // (udkast ud fra Sasjas beskeder hvor hun lige skriver for at minde dig om
         //  at hun elsker dig, og dine ord om at passe på hinanden)
-        tekst: 'Når du lige skriver for at minde mig om at du elsker mig. Og det gør mig så glad at du har lyst til at passe på mig ligesom jeg vil med dig.',
+        tekst: 'Når du lige skriver for at minde mig om at du elsker mig. Og at du har lyst til at passe på mig ligesom jeg vil passe på dig.',
       },
     ] satisfies Ting[],
   },
@@ -151,19 +151,20 @@ export const indhold = {
       {
         titel: 'Vores tur til Sverige.',
         // (dine ord: "super hyggelig", og din idé om at tage bogen med og læse sammen)
-        tekst: 'Den var super hyggelig. Jeg vil så gerne af sted med dig igen. Og så tager vi en bog med og læser sammen.',
+        tekst: 'Den var superhyggelig. Jeg vil så gerne af sted med dig igen. Og så tager vi en bog med og læser sammen.',
         tegning: 'sverige',
       },
       {
         titel: 'En dør ind til din verden.',
-        // (dine ord fra aftenen 30. maj; 'Roskilde-pladsen' er Sasjas ord fra dagen efter)
-        tekst: 'Dagen på Roskilde-pladsen. Tak fordi du lukkede mig ind. Jeg glæder mig til at være med dig mange gange endnu.',
+        // (dine ord fra aftenen 30. maj: "noget jeg glæder mig til at deltage i med dig mange gange endnu";
+        //  'Roskilde-pladsen' er Sasjas ord fra dagen efter)
+        tekst: 'Dagen på Roskilde-pladsen. Tak fordi du lukkede mig ind. Det glæder jeg mig til at deltage i med dig mange gange endnu.',
         tegning: 'doer',
       },
       {
         titel: 'Morgenputte kl. 6.',
         // (dine ord + udkast i den skjulte note)
-        tekst: 'Rammer bare anderledes. Det er så dejligt at vågne med dig. Hverdagsmorgener er skidehårde fordi jeg bare har lyst til at blive liggende.',
+        tekst: 'Rammer bare anderledes. Det er så dejligt at vågne sammen. Hverdagsmorgener er skidehårde fordi jeg bare har lyst til at blive liggende med dig.',
         tegning: 'morgen',
         hemmelighed: { knap: 'Snooze?', tekst: 'Bare fem minutter mere med dig.' },
       },
@@ -183,7 +184,7 @@ export const indhold = {
 
   // 5 · Vores lille album. Tilføj gerne flere billeder.
   album: {
-    overskrift: 'Mine yndlingsbilleder af dig', // (udkast)
+    overskrift: 'Mine yndlingsbilleder af os', // (udkast)
     billeder: [
       {
         fil: 'os-elevator.jpg',
@@ -228,11 +229,11 @@ Du er det dejligste og sødeste menneske og jeg er så glad for den tid vi har s
 
 Jeg elsker de små øjeblikke hvor du pludselig dukker op i mine tanker. Nogle gange er det dig der løber med paraplyen og er så hamrende glad. Nogle gange er det bare dit søde grin. Så sidder jeg der og smiler helt fjollet for mig selv.
 
-Jeg elsker din kærlige side og din fjollede side. Og hvor tossede vi kan være sammen. Du gør mig så glad skat. Det skal du bare vide.
+Jeg elsker hvor tossede vi kan være sammen. Dig der rækker tunge i spejlet og mig med trutmund. Du gør mig så glad min skat. Og jeg ved du bliver glad når jeg siger det. Så nu får du det på skrift.
 
 Men det er nok de helt almindelige ting jeg elsker allermest. At vågne med dig og ikke have travlt. At holde dig på låret mens vi kører. At kunne dufte dig på min pude i sofaen. At se dig forsvinde ind i en bog. Og at holde om dig og høre dit hjerte banke af sted og så stille og roligt falde til ro. Den ro der kommer når vi er tæt på hinanden er noget af det dejligste jeg kender.
 
-Og jeg glæder mig så meget til alt det der kommer. Flere ture og flere morgener. Flere kram og flere bøger. Og alle de minder vi ikke kender endnu.
+Og jeg glæder mig så meget til alt det der kommer. Flere ture og flere morgener. Flere kram og flere bøger. Og alle de minder vi stadig har til gode.
 
 Tillykke med vores første seks måneder.
 
@@ -248,8 +249,9 @@ Og så siger jeg det bare igen for tusinde gang. Og der kommer mange tusinde end
   // 7 · Afslutningen
   slut: {
     forLinje: '', // en lille linje over afslutningen hvis du vil have en
-    linje: 'Min yndlings. Jeg elsker dig.',
-    underskrift: 'Din Marcus ♥',
+    // (dine ord: "min eneste ene")
+    linje: 'Tak for seks måneder min eneste ene.',
+    underskrift: '', // brevet er allerede underskrevet lige over; skriv fx 'Din Marcus ♥' her, hvis du vil have den igen
     tilbage: 'Tilbage til begyndelsen',
     kuvertIgen: 'Åbn kuverten igen',
   },
