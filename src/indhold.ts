@@ -171,7 +171,7 @@ export const indhold = {
         // (dine ord)
         tekst: 'Jeg mener stadig du burde blive sponsoreret.',
         tegning: 'skildpadde',
-        stempel: 'Sponsoreret af mig selv', // (dine ord)
+        stempel: 'Sponsoreret af mig self', // (dine ord)
       },
     ] satisfies Minde[],
   },
