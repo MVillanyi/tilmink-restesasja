@@ -70,11 +70,10 @@ export const indhold = {
   // 3 · Seks ting jeg elsker ved dig
   seksTing: {
     overskrift: 'Seks ting jeg elsker ved dig',
-    indledning: 'Jeg kunne sagtens have skrevet hundrede.', // (udkast) Sæt til '' for at fjerne den
+    indledning: '', // en lille linje under overskriften hvis du vil have en
     ting: [
       {
         titel: 'Dit smil.',
-        note: '(Måske lige nu?)', // (udkast, gaven er jo selv en overraskelse)
         // (dine ord: "helt specielt smil", "så meget det værd", "det gør også mig så glad")
         tekst: 'Du får sådan et helt specielt smil når jeg gør dig glad med noget du ikke havde regnet med. Det er så meget det værd at se dig smile sådan. For det gør også mig så glad.',
         billede: {
@@ -119,8 +118,8 @@ export const indhold = {
 
   // 3½ · Din fjollede side får sit eget opslag med de fjollede billeder
   fjollet: {
-    overtekst: 'Bevismateriale', // (udkast)
-    overskrift: ['Vi kan også godt være seriøse.', 'Nogle gange.'], // (udkast)
+    overtekst: '', // en lille linje over overskriften hvis du vil have en
+    overskrift: ['Hvor tossede vi kan være sammen.'], // (dine ord fra brevet)
     billeder: [
       {
         fil: 'os-fjollede-ansigter.jpg',
@@ -169,14 +168,9 @@ export const indhold = {
       },
       {
         titel: 'Skildpaddeisen.',
-        // (dine ord + udkast i den skjulte note)
+        // (dine ord)
         tekst: 'Jeg mener stadig du burde blive sponsoreret.',
         tegning: 'skildpadde',
-        stempel: 'Sponsor søges', // (udkast)
-        hemmelighed: {
-          knap: 'Og sponsoratet?',
-          tekst: 'Din ansøgning om skildpaddeis-sponsorat er stadig under behandling.',
-        },
       },
     ] satisfies Minde[],
   },
@@ -194,8 +188,8 @@ export const indhold = {
       {
         fil: 'os-frisoer-grin.jpg',
         alt: 'Marcus griner tæt på kameraet. Bag ham sidder Sasja med folie i håret. Hun rækker tunge og laver peacetegn.',
-        // (udkast ud fra dine ord: "mærkelige ting for at se dig smile", "yndlingsaktivitet")
-        tekst: 'At gøre mærkelige ting for at se dig smile. Stadig min yndlingsaktivitet.',
+        // (dine ord: "mærkelige ting for at se dig smile")
+        tekst: 'Jeg gør gerne mærkelige ting for at se dig smile.',
         fokus: '50% 70%',
       },
       {
@@ -216,13 +210,12 @@ export const indhold = {
     billede: {
       fil: 'sasja-laeser.jpg',
       alt: 'Sasja læser en bog i lyset fra en lampe.',
-      tekst: 'En god bog. Lidt nus. Dig helt tæt på.', // (udkast)
       fokus: '50% 20%',
     } satisfies Billede,
     hilsen: 'Min skat',
     // Hvert afsnit adskilles af en tom linje.
     tekst: `
-Et halvt år med dig. Jeg ville give dig noget du kan vende tilbage til. Så her er et lille sted hvor jeg har samlet alt det jeg elsker ved dig. Eller i hvert fald en start.
+Et halvt år med dig. Jeg ville give dig noget du kan vende tilbage til. Så her er et lille sted hvor jeg har samlet alt det jeg elsker ved dig.
 
 Du er det dejligste og sødeste menneske og jeg er så glad for den tid vi har sammen. Du giver mig simpelthen så meget varme i hjertet.
 
@@ -242,7 +235,7 @@ Og så siger jeg det bare igen for tusinde gang. Og der kommer mange tusinde end
     afslutning: 'Jeg elsker dig så så så så så så så meget min yndlings ♥',
     underskrift: 'Din Marcus',
     // Lille efterskrift under brevet. Sæt til '' for at fjerne det.
-    ps: 'PS. Jeg ved det godt. Din kæmpe softy har lavet en hel hjemmeside til dig.', // (udkast ud fra Sasjas "kæmpe softy")
+    ps: '',
   },
 
   // 7 · Afslutningen

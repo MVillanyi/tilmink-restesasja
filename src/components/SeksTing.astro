@@ -3,7 +3,9 @@ import { indhold } from '../indhold';
 import Foto from './Foto.astro';
 import Hemmelighed from './Hemmelighed.astro';
 import Linjer from './Linjer.astro';
+import type { Ting } from '../lib/typer';
 const s = indhold.seksTing;
+const ting: Ting[] = s.ting;
 ---
 
 <section class="seks" id="seks-ting" aria-labelledby="seks-titel">
@@ -11,7 +13,7 @@ const s = indhold.seksTing;
   {s.indledning && <p class="sektion-indledning" data-vis><Linjer tekst={s.indledning} /></p>}
   <ol class="seks-liste">
     {
-      s.ting.map((t, i) => (
+      ting.map((t, i) => (
         <li class:list={['ting', `ting--${i + 1}`, { 'ting--foto': t.billede, 'ting--note': !t.billede }]} data-vis>
           <div class="ting-tekst">
             <span class="ting-nr" aria-hidden="true">{i + 1}</span>
